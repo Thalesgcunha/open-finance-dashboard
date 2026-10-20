@@ -59,17 +59,20 @@
                     </div>
                     <div>
                         <div class="flex items-center space-x-2">
-                            <h1 class="font-bold text-lg text-slate-900 dark:text-white leading-tight">Open Finance BRB</h1>
+                            <h1 id="headerTitle" class="font-bold text-lg text-slate-900 dark:text-white leading-tight">Open Finance BRB</h1>
                             <span class="bg-blue-100 dark:bg-blue-900/60 text-brb-blue dark:text-blue-300 text-xs font-semibold px-2 py-0.5 rounded-full border border-blue-200 dark:border-blue-700/50">
                                 Gestão de Desconformidades
                             </span>
                         </div>
-                        <p class="text-xs text-slate-5-00 dark:text-slate-400">GP Responsável: <span class="font-medium text-slate-700 dark:text-slate-300">Thales Garcia Cunha</span></p>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">GP Responsável: <span id="headerGp" class="font-medium text-slate-700 dark:text-slate-300">Thales Garcia Cunha</span></p>
                     </div>
                 </div>
 
                 <!-- Right Toolbar Options -->
                 <div class="flex items-center space-x-2 sm:space-x-3">
+                    <button onclick="openConfigModal()" class="p-2 text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 rounded-lg bg-slate-100 dark:bg-slate-700/60 transition" title="Configurações">
+                        <i class="fa-solid fa-gear"></i>
+                    </button>
                     <button id="exportModalBtn" onclick="openExportModal()" class="inline-flex items-center px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg text-xs font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600 transition shadow-sm">
                         <i class="fa-solid fa-file-export mr-1.5 text-brb-lightBlue">
                         </i> Relatório Executivo
@@ -121,7 +124,7 @@
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Total de Ações</p>
-                        <h3 id="kpiTotal" class="text-2xl font-bold text-slate-900 dark:text-white mt-1">13</h3>
+                        <h3 id="kpiTotal" class="text-2xl font-bold text-slate-900 dark:text-white mt-1">0</h3>
                     </div>
                     <div class="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-900/40 text-brb-blue dark:text-blue-400 flex items-center justify-center text-lg">
                         <i class="fa-solid fa-list-check"></i>
@@ -137,14 +140,14 @@
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Finalizadas / Saneadas</p>
-                        <h3 id="kpiFinalizadas" class="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">4</h3>
+                        <h3 id="kpiFinalizadas" class="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">0</h3>
                     </div>
                     <div class="w-10 h-10 rounded-lg bg-emerald-50 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-lg">
                         <i class="fa-solid fa-circle-check"></i>
                     </div>
                 </div>
                 <div class="mt-3 text-xs text-emerald-600 dark:text-emerald-400 font-medium flex items-center">
-                    <i class="fa-solid fa-arrow-up mr-1"></i> 30.7% concluídas
+                    <i class="fa-solid fa-arrow-up mr-1"></i> <span id="kpiFinalizadasPct">0%</span> concluídas
                 </div>
             </div>
 
@@ -153,7 +156,7 @@
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Em Andamento / Validação</p>
-                        <h3 id="kpiEmAndamento" class="text-2xl font-bold text-amber-500 dark:text-amber-400 mt-1">9</h3>
+                        <h3 id="kpiEmAndamento" class="text-2xl font-bold text-amber-500 dark:text-amber-400 mt-1">0</h3>
                     </div>
                     <div class="w-10 h-10 rounded-lg bg-amber-50 dark:bg-amber-900/40 text-amber-500 dark:text-amber-400 flex items-center justify-center text-lg">
                         <i class="fa-solid fa-spinner animate-spin-slow"></i>
@@ -301,7 +304,7 @@
                         <option value="Augusto">Augusto Freitas</option>
                         <option value="Esdras">Esdras Kutomi</option>
                         <option value="Marcela">Marcela Petra</option>
-                        <option value="Rafael">Rafael Macedo (NUMON)</option>
+                        <option value="Rafael">Rafael Macedo</option>
                         <option value="DEFCON">Sala DEFCON</option>
                         <option value="NUCRE">NUCRE / SPREAD</option>
                         <option value="BRB Card">BRB Card</option>
@@ -407,7 +410,7 @@
                                     <h5 class="text-xs font-bold text-slate-800 dark:text-slate-200">Rate Limit Async na Tabela `tb_historico_consulta`</h5>
                                     <span class="text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950 px-2 py-0.5 rounded border border-amber-200 dark:border-amber-800">Prazo: 23/10/2026</span>
                                 </div>
-                                <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Implementação de biblioteca assíncrona desenvolvida pelo Cristian Bilert em fase de testes por Augusto Freitas.</p>
+                                <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Implementação de biblioteca assíncrona em fase de testes.</p>
                                 <div class="mt-2 text-xs text-slate-500">Resp: Augusto Freitas</div>
                             </div>
 
@@ -417,7 +420,7 @@
                                     <h5 class="text-xs font-bold text-slate-800 dark:text-slate-200">Novo Microserviço de Salvamento PCM (`obk-si-pcm`)</h5>
                                     <span class="text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950 px-2 py-0.5 rounded border border-amber-200 dark:border-amber-800">Deploy PRD: 13/11/2026</span>
                                 </div>
-                                <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Descouplamento do Gateway. Microserviço criado por Augusto em acompanhamento com Lucas Samuel.</p>
+                                <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Descouplamento do Gateway. Microserviço em acompanhamento.</p>
                                 <div class="mt-2 text-xs text-slate-500">Resp: Augusto Freitas / Lucas Samuel</div>
                             </div>
                         </div>
@@ -451,10 +454,9 @@
                                     <h5 class="text-xs font-bold text-slate-800 dark:text-slate-200">Melhoria de Tempo de Resposta OCG (IT02717587 / RS977057)</h5>
                                     <span class="text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950 px-2 py-0.5 rounded border border-amber-200 dark:border-amber-800">Prazo: 30/10/2026</span>
                                 </div>
-                                <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Em análise pela NUCRE. Estudo de contorno via rotina de atualização automática se necessário.</p>
+                                <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Em análise pela NUCRE. Estudo de contorno se necessário.</p>
                                 <div class="mt-2 text-xs text-slate-500">Resp: NUCRE / SPREAD</div>
                             </div>
-
                             <div class="relative pl-6">
                                 <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-rose-500 border-2 border-white dark:border-slate-900"></div>
                                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
@@ -463,16 +465,6 @@
                                 </div>
                                 <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Tratativa técnica de timeouts de API de cartões junto aos responsáveis do BRB Card.</p>
                                 <div class="mt-2 text-xs text-slate-500">Resp: Equipe BRB Card</div>
-                            </div>
-
-                            <div class="relative pl-6">
-                                <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-amber-500 border-2 border-white dark:border-slate-900"></div>
-                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                                    <h5 class="text-xs font-bold text-slate-800 dark:text-slate-200">Adequação de Dados de Extrato (Contraparte, CodeISPB e D+0)</h5>
-                                    <span class="text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950 px-2 py-0.5 rounded border border-amber-200 dark:border-amber-800">Prazo: 30/10/2026</span>
-                                </div>
-                                <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Acompanhamento semanal às sextas-feiras com Samuel Couto (NUCAN) para alinhamento de campos.</p>
-                                <div class="mt-2 text-xs text-slate-500">Resp: NUCAN</div>
                             </div>
                         </div>
                     </div>
@@ -487,7 +479,7 @@
                             </div>
                             <div>
                                 <h4 class="font-semibold text-sm text-slate-800 dark:text-slate-100">Frente 4: Governança, Reporte & Observabilidade</h4>
-                                <p class="text-xs text-slate-500 dark:text-slate-400">Dashboards Grafana/Zabbix, Reporte dropReason LINA & Tuning de Threads</p>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Dashboards Grafana/Zabbix, Reporte dropReason LINA & Tuning</p>
                             </div>
                         </div>
                         <div class="flex items-center space-x-3">
@@ -508,7 +500,6 @@
                                 <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Grafana configurado. Pendente liberação do usuário `USR_Zabbix` no BD MCN1P.AUD.</p>
                                 <div class="mt-2 text-xs text-slate-500">Resp: Rafael Macedo Silva (NUMON)</div>
                             </div>
-
                             <div class="relative pl-6">
                                 <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-purple-500 border-2 border-white dark:border-slate-900"></div>
                                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
@@ -517,16 +508,6 @@
                                 </div>
                                 <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Em fase de testes na demanda ESTTSDEF-296 pela sala DEFCON.</p>
                                 <div class="mt-2 text-xs text-slate-500">Resp: Sala DEFCON</div>
-                            </div>
-
-                            <div class="relative pl-6">
-                                <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-amber-500 border-2 border-white dark:border-slate-900"></div>
-                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                                    <h5 class="text-xs font-bold text-slate-800 dark:text-slate-200">Dimensionamento de Threads e Connection Pools OBK</h5>
-                                    <span class="text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950 px-2 py-0.5 rounded border border-amber-200 dark:border-amber-800">Prazo: 30/10/2026</span>
-                                </div>
-                                <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Revisão de configurações para mitigar lentidões provocadas por picos simultâneos de consumo.</p>
-                                <div class="mt-2 text-xs text-slate-500">Resp: Augusto Freitas / Esdras Kutomi</div>
                             </div>
                         </div>
                     </div>
@@ -542,14 +523,16 @@
                         <i class="fa-solid fa-table-list text-brb-blue dark:text-brb-lightBlue"></i>
                         Matriz Detalhada de Ações e Subtarefas Operacionais
                     </h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">Clique na linha da ação para expandir ou recolher as tarefas executadas e pendentes</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Clique na linha da ação para expandir as tarefas ou no botão para editar</p>
                 </div>
-                <div class="text-xs text-slate-500 dark:text-slate-400 font-mono">
-                    Exibindo: <span id="visibleCount" class="font-bold text-slate-800 dark:text-slate-200">13</span> ações
+                <div class="flex items-center gap-3">
+                    <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">Exibindo: <span id="visibleCount" class="font-bold text-slate-800 dark:text-slate-200">0</span></span>
+                    <button onclick="openActionModal()" class="px-4 py-2 bg-brb-blue hover:bg-brb-darkBlue text-white text-xs font-semibold rounded-lg shadow-sm transition">
+                        <i class="fa-solid fa-plus mr-1"></i> Nova Ação
+                    </button>
                 </div>
             </div>
 
-            <!-- Table Container -->
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-xs">
                     <thead class="bg-slate-50 dark:bg-slate-900/80 text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold border-b border-slate-200 dark:border-slate-700">
@@ -559,7 +542,7 @@
                             <th class="py-3.5 px-4">Responsável</th>
                             <th class="py-3.5 px-4">Data Prevista</th>
                             <th class="py-3.5 px-4">Status</th>
-                            <th class="py-3.5 px-4 text-center">Detalhes</th>
+                            <th class="py-3.5 px-4 text-center">Ações</th>
                         </tr>
                     </thead>
                     <tbody id="actionsTableBody" class="divide-y divide-slate-200 dark:divide-slate-700/60 font-medium">
@@ -568,330 +551,137 @@
                 </table>
             </div>
         </section>
-
     </main>
 
-    <!-- Modal: Action Details View -->
-    <div id="detailsModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 dark:border-slate-700 p-6 space-y-4">
-            <div class="flex justify-between items-start border-b border-slate-200 dark:border-slate-700 pb-3">
-                <div>
-                    <span id="modalTipo" class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-100 text-brb-blue dark:bg-blue-900/60 dark:text-blue-300">
-                        Tipo
-                    </span>
-                    <h3 id="modalTitulo" class="text-lg font-bold text-slate-900 dark:text-white mt-2">
-                        Título da Ação
-                    </h3>
+    <!-- Modal Form (Create / Edit) -->
+    <div id="modalAction" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-700 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-700 pb-3 mb-4">
+                <h3 id="actionModalTitle" class="text-lg font-bold text-slate-900 dark:text-white">Nova Ação</h3>
+                <button onclick="closeActionModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            
+            <input type="hidden" id="actId">
+            <div class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-xs font-medium text-slate-500 block mb-1">Tipo / Categoria</label>
+                        <select id="actTipo" class="w-full p-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-xs outline-none focus:ring-2 focus:ring-brb-lightBlue">
+                            <option value="Tempo de Resposta das APIs">Tempo de Resposta das APIs</option>
+                            <option value="Taxa de conversão">Taxa de Conversão</option>
+                            <option value="Reporte de Informações">Reporte de Informações</option>
+                            <option value="Disponibilidade">Disponibilidade</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-xs font-medium text-slate-500 block mb-1">Status</label>
+                        <select id="actStatus" class="w-full p-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-xs outline-none focus:ring-2 focus:ring-brb-lightBlue">
+                            <option value="EM ANDAMENTO">EM ANDAMENTO</option>
+                            <option value="VALIDANDO">VALIDANDO</option>
+                            <option value="FINALIZADA">FINALIZADA</option>
+                        </select>
+                    </div>
                 </div>
-                <button onclick="closeDetailsModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-lg p-1">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-
-            <div class="grid grid-cols-2 gap-4 text-xs">
+                
                 <div>
-                    <span class="text-slate-500 dark:text-slate-400 block font-medium">Responsável</span>
-                    <span id="modalResp" class="font-semibold text-slate-800 dark:text-slate-200 text-sm">--</span>
+                    <label class="text-xs font-medium text-slate-500 block mb-1">Atuação / Título Principal</label>
+                    <input type="text" id="actAtuacao" class="w-full p-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-xs outline-none">
                 </div>
+                
                 <div>
-                    <span class="text-slate-500 dark:text-slate-400 block font-medium">Data Prevista</span>
-                    <span id="modalData" class="font-semibold text-slate-800 dark:text-slate-200 text-sm">--</span>
+                    <label class="text-xs font-medium text-slate-500 block mb-1">Detalhes Técnicos</label>
+                    <textarea id="actDetalhes" rows="2" class="w-full p-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-xs outline-none"></textarea>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-xs font-medium text-slate-500 block mb-1">Responsável</label>
+                        <input type="text" id="actResp" class="w-full p-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="text-xs font-medium text-slate-500 block mb-1">Data / Prazo</label>
+                        <input type="text" id="actData" placeholder="Ex: 30/10/2026" class="w-full p-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-xs outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-xs font-medium text-slate-500 block mb-1">Subtarefas (Uma por linha. Use [x] para marcar como feita)</label>
+                    <textarea id="actTarefas" rows="4" placeholder="Analisar Logs&#10;[x] Configurar Instana" class="w-full p-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-xs outline-none font-mono"></textarea>
                 </div>
             </div>
 
-            <div>
-                <span class="text-slate-500 dark:text-slate-400 block text-xs font-medium mb-1">Status Atual</span>
-                <span id="modalStatusBadge" class="inline-block">--</span>
-            </div>
-
-            <div>
-                <span class="text-slate-500 dark:text-slate-400 block text-xs font-medium mb-1">Detalhamento & Observações Técnicas</span>
-                <p id="modalDetalhes" class="text-xs text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-700 leading-relaxed">
-                    --
-                </p>
-            </div>
-
-            <div>
-                <span class="text-slate-500 dark:text-slate-400 block text-xs font-medium mb-2">Checklist de Tarefas</span>
-                <ul id="modalTasksList" class="space-y-1.5 text-xs text-slate-700 dark:text-slate-300">
-                    <!-- Tasks inserted dynamically -->
-                </ul>
-            </div>
-
-            <div class="pt-3 border-t border-slate-200 dark:border-slate-700 flex justify-end">
-                <button onclick="closeDetailsModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 text-xs font-semibold rounded-xl transition">
-                    Fechar
-                </button>
+            <div class="flex justify-end gap-3 pt-5 border-t border-slate-200 dark:border-slate-700 mt-5">
+                <button onclick="deleteAction()" id="btnDelete" class="px-4 py-2 bg-rose-100 text-rose-700 hover:bg-rose-200 dark:bg-rose-900/50 dark:text-rose-300 text-xs font-semibold rounded-lg hidden">Excluir</button>
+                <button onclick="closeActionModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 text-xs font-semibold rounded-lg">Cancelar</button>
+                <button onclick="saveAction()" class="px-5 py-2 bg-brb-blue hover:bg-brb-darkBlue text-white text-xs font-bold rounded-lg shadow">Salvar Ação</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal: Executive Report Generator -->
+    <!-- Modal Export / Report -->
     <div id="exportModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 dark:border-slate-700 p-6 space-y-4">
-            <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-700 pb-3">
-                <div class="flex items-center space-x-2">
-                    <i class="fa-solid fa-file-contract text-brb-lightBlue text-xl"></i>
-                    <h3 class="text-base font-bold text-slate-900 dark:text-white">Relatório Executivo para Gestão / Teams</h3>
-                </div>
-                <button onclick="closeExportModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-lg">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-3xl w-full p-6 shadow-2xl">
+            <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-700 pb-3 mb-4">
+                <h3 class="font-bold">Relatório Executivo</h3>
+                <button onclick="closeExportModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark"></i></button>
             </div>
-
-            <p class="text-xs text-slate-500 dark:text-slate-400">
-                Abaixo está o resumo consolidado formatado para cópia rápida (Teams/E-mail) ou impressão oficial de acompanhamento.
-            </p>
-
-            <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-4 font-mono text-xs leading-relaxed text-slate-800 dark:text-slate-200 whitespace-pre-wrap max-h-96 overflow-y-auto" id="reportTextContent">
-<!-- Dynamic Report Generated Here -->
-            </div>
-
-            <div class="flex flex-col sm:flex-row justify-between items-center gap-3 pt-3 border-t border-slate-200 dark:border-slate-700">
-                <span id="copyFeedback" class="text-xs text-emerald-600 font-semibold hidden">
-                    <i class="fa-solid fa-check mr-1"></i> Resumo copiado para a área de transferência!
-                </span>
-                <div class="flex space-x-2 w-full sm:w-auto justify-end">
-                    <button onclick="printPDF()" class="px-3.5 py-2 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 text-xs font-semibold rounded-xl transition">
-                        <i class="fa-solid fa-print mr-1"></i> Imprimir / Gerar PDF
-                    </button>
-                    <button onclick="copyReportText()" class="px-4 py-2 bg-brb-blue hover:bg-brb-darkBlue text-white text-xs font-semibold rounded-xl transition shadow">
-                        <i class="fa-solid fa-copy mr-1"></i> Copiar Texto Formatado
-                    </button>
-                </div>
+            <textarea id="reportTextContent" class="w-full h-64 p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg font-mono text-xs outline-none resize-none" readonly></textarea>
+            <div class="flex justify-end pt-4">
+                <button onclick="copyReportText()" class="px-4 py-2 bg-brb-blue text-white text-xs font-bold rounded-lg"><i class="fa-solid fa-copy mr-1"></i> Copiar Relatório</button>
             </div>
         </div>
     </div>
 
-    <!-- Data & Script Engine -->
+    <!-- Modal Config Topo -->
+    <div id="modalConfig" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-sm w-full p-6 shadow-2xl">
+            <h3 class="font-bold mb-4">Configurar Topo</h3>
+            <label class="text-xs mb-1 block">Título Principal</label>
+            <input type="text" id="cfgTitle" class="w-full p-2 mb-3 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded text-xs">
+            <label class="text-xs mb-1 block">GP Responsável</label>
+            <input type="text" id="cfgGp" class="w-full p-2 mb-4 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded text-xs">
+            <div class="flex justify-end gap-2">
+                <button onclick="closeConfigModal()" class="px-4 py-2 bg-slate-100 rounded text-xs">Cancelar</button>
+                <button onclick="saveHeaderConfig()" class="px-4 py-2 bg-brb-blue text-white rounded text-xs">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript & Logic -->
     <script>
-        // Data Structure extracted from spreadsheet
-        const rawActionsData = [
-            {
-                id: 1,
-                tipo: "Tempo de Resposta das APIs",
-                atuacao: "Reunir todos os endpoints utilizados pelo OF para monitoramento",
-                data: "18/09/2026",
-                status: "FINALIZADA",
-                responsavel: "Marcela Petra",
-                detalhes: "Criada planilha com endpoints, ainda adicionando outros. Aba 'categorias'.",
-                tarefas: [
-                    { desc: "Verificar logs, swaggers e outros para reunir endpoints (15/09/2026)", ok: true },
-                    { desc: "Preencher em planilha (17/09/2026)", ok: true }
-                ]
-            },
-            {
-                id: 2,
-                tipo: "Tempo de Resposta das APIs",
-                atuacao: "Criação de dashboards de latência e dispersão (Grafana/Zabbix)",
-                data: "10/10/2026",
-                status: "EM ANDAMENTO",
-                responsavel: "Rafael Macedo Silva (NUMON)",
-                detalhes: "Explorando possibilidades de criação de dashboard no Grafana. Análise de P95 e P99. Aguardando aprovação da liberação do USR_Zabbix no banco MCN1P.AUD.",
-                tarefas: [
-                    { desc: "Separar por endpoint (21/09/2026)", ok: true },
-                    { desc: "Categorizar por tipo (24/09/2026)", ok: true },
-                    { desc: "Criar gráficos (27/09/2026)", ok: true },
-                    { desc: "Liberar USR_Zabbix para acesso ao bd MCN1P.AUD (IT02707756 / RS972308) (06/10/2026)", ok: false },
-                    { desc: "Criar linhas de 1s e 1.5s no gráfico de dispersão (02/10/2026)", ok: true },
-                    { desc: "Criar indicadores P95, P99, resposta média/máxima (07/10/2026)", ok: true },
-                    { desc: "Filtrar ids de recursos nas URLs (09/10/2026) - Solução de contorno via busca URL", ok: true },
-                    { desc: "Leitura de métricas prometheus dos serviços (05/10/2026)", ok: true },
-                    { desc: "Validar usos do dashboard e solicitar ajustes (30/10/2026)", ok: false }
-                ]
-            },
-            {
-                id: 3,
-                tipo: "Tempo de Resposta das APIs",
-                atuacao: "Análise de configuração de métricas Actuator/Metrics",
-                data: "22/09/2026",
-                status: "FINALIZADA",
-                responsavel: "Raul Neres",
-                detalhes: "Conseguiu rodar localmente para obter métricas no actuator/prometheus. Configurado para exibir percentis.",
-                tarefas: [
-                    { desc: "Adição de libs micrometer e correções (18/09/2026)", ok: true },
-                    { desc: "Apresentação de percentiles (20/09/2026)", ok: true },
-                    { desc: "Subir versão HMO do obk-dt-resources para uso nos dashboards (22/09/2026)", ok: true }
-                ]
-            },
-            {
-                id: 4,
-                tipo: "Tempo de Resposta das APIs",
-                atuacao: "Investigação de planilhas de auditoria e LINA (Lentidões e Erros)",
-                data: "30/09/2026",
-                status: "FINALIZADA",
-                responsavel: "Augusto Freitas, Esdras Kutomi",
-                detalhes: "Divergências encontradas na planilha da Lina. Chamado PCLINA-5787 aberto e alinhado em reunião. Nova planilha recebida sem divergências.",
-                tarefas: [
-                    { desc: "Análise das planilhas (28/09/2026)", ok: true },
-                    { desc: "Abertura do chamado PCLINA-5787 (29/09/2026)", ok: true },
-                    { desc: "Reunião alinhamento com a Lina (29/09/2026)", ok: true },
-                    { desc: "Retorno da Lina contestando intermitências (08/10/2026)", ok: true }
-                ]
-            },
-            {
-                id: 5,
-                tipo: "Tempo de Resposta das APIs",
-                atuacao: "Criação de incidentes na sala DEFCON para investigação contínua",
-                data: "18/09/2026",
-                status: "FINALIZADA",
-                responsavel: "Andressa Gonçalves",
-                detalhes: "Acesso ao banco de dados de PRD providenciado para Augusto para investigação de erros e lentidões.",
-                tarefas: [
-                    { desc: "Acesso concedido ao banco de PRD (16/09/2026)", ok: true },
-                    { desc: "Incidentes abertos na sala DEFCON e em atendimento (18/09/2026)", ok: true }
-                ]
-            },
-            {
-                id: 6,
-                tipo: "Taxa de conversão",
-                atuacao: "Análise do impacto da liberação do App to App na Taxa de Conversão",
-                data: "21/10/2026",
-                status: "EM ANDAMENTO",
-                responsavel: "Marcela Petra / Thales",
-                detalhes: "Well Known alterado e App to App liberado em 09/10/2026. Aguardando atualização das métricas no Quicksight.",
-                tarefas: [
-                    { desc: "Versão do app com adoção 100% pelos aparelhos (01/10/2026)", ok: true },
-                    { desc: "Alteração no well known (05/10/2026) - Falhou, re-agendado", ok: true },
-                    { desc: "Alteração no well known executada com sucesso (09/10/2026)", ok: true },
-                    { desc: "Aguardando publicação de nova taxa de conversão no Quicksight (21/10/2026)", ok: false }
-                ]
-            },
-            {
-                id: 7,
-                tipo: "Reporte de Informações",
-                atuacao: "Adequação do envio do campo dropReason nos reports de pagamento LINA",
-                data: "30/09/2026",
-                status: "VALIDANDO",
-                responsavel: "Sala DEFCON",
-                detalhes: "Lina faz o reporte, porém é necessária atuação do BRB para fornecer o campo dropReason. Demanda ESTTSDEF-296 em desenvolvimento/testes.",
-                tarefas: [
-                    { desc: "Início do desenvolvimento (15/09/2026)", ok: true },
-                    { desc: "Fim do desenvolvimento (25/09/2026)", ok: true },
-                    { desc: "Gerar EVT (28/09/2026)", ok: true },
-                    { desc: "Início dos testes de homologação (29/09/2026)", ok: false }
-                ]
-            },
-            {
-                id: 8,
-                tipo: "Tempo de Resposta das APIs",
-                atuacao: "Migração de serviços OBK para novo framework com auditoria Kafka async",
-                data: "23/10/2026",
-                status: "EM ANDAMENTO",
-                responsavel: "Esdras Kutomi",
-                detalhes: "Iniciando migração dos serviços de dados abertos para posteriormente migrar os serviços de dados transacionais.",
-                tarefas: [
-                    { desc: "Iniciar migração serviços OBK Dados Abertos (12/10/2026)", ok: true },
-                    { desc: "Migrar demais serviços OBK Dados Abertos (23/10/2026)", ok: false },
-                    { desc: "Migrar serviços OBK Dados Transacionais (30/10/2026)", ok: false }
-                ]
-            },
-            {
-                id: 9,
-                tipo: "Tempo de Resposta das APIs",
-                atuacao: "Alterar rate limit para async no salvamento da tb_historico_consulta",
-                data: "23/10/2026",
-                status: "EM ANDAMENTO",
-                responsavel: "Augusto Freitas",
-                detalhes: "Cristian Bilert criou versão async do rate limit. Augusto em fase de análise e testes.",
-                tarefas: [
-                    { desc: "Análise de Lib separada rate limit com async (14/10/2026)", ok: true },
-                    { desc: "Testes do rate limit com async (19/10/2026)", ok: false },
-                    { desc: "Implementar nos serviços OBK Dados Transacionais (23/10/2026)", ok: false }
-                ]
-            },
-            {
-                id: 10,
-                tipo: "Tempo de Resposta das APIs",
-                atuacao: "Criar novo microserviço assíncrono para salvamento PCM (obk-si-pcm)",
-                data: "30/10/2026",
-                status: "EM ANDAMENTO",
-                responsavel: "Augusto Freitas / Lucas Samuel",
-                detalhes: "Identificada demora de salvamento PCM via Instana no gateway. Novo microserviço em desenvolvimento para desacoplamento.",
-                tarefas: [
-                    { desc: "Criação de serviço obk-si-pcm (14/10/2026)", ok: true },
-                    { desc: "Desenvolvimento de serviço para salvamento (23/10/2026)", ok: false },
-                    { desc: "Alteração no gateway para chamar o novo serviço (28/10/2026)", ok: false },
-                    { desc: "Testes e Homologação (30/10/2026)", ok: false },
-                    { desc: "Implementação em Produção (13/11/2026)", ok: false }
-                ]
-            },
-            {
-                id: 11,
-                tipo: "Tempo de Resposta das APIs",
-                atuacao: "Melhoria de tempo de resposta em endpoints OCG (IT02717587 / RS977057)",
-                data: "30/10/2026",
-                status: "EM ANDAMENTO",
-                responsavel: "NUCRE / SPREAD",
-                detalhes: "RS977057 gerada e em análise pela NUCRE. Avaliar contorno de rotina automática de atualização se não houver ajuste direto.",
-                tarefas: [
-                    { desc: "Identificação do problema no Instana (01/10/2026)", ok: true },
-                    { desc: "Criação da IT02717587 (02/10/2026)", ok: true },
-                    { desc: "Análise técnica pela NUCRE", ok: false },
-                    { desc: "Definição de solução definitiva ou de contorno (30/10/2026)", ok: false }
-                ]
-            },
-            {
-                id: 12,
-                tipo: "Tempo de Resposta das APIs",
-                atuacao: "Saneamento de lentidão na API de Cartão com a BRB Card (ID 1103613)",
-                data: "30/10/2026",
-                status: "EM ANDAMENTO",
-                responsavel: "BRB Card",
-                detalhes: "Chamado 1103613 aberto para investigar estouro de tempo de resposta na API de Cartões.",
-                tarefas: [
-                    { desc: "Identificação do problema no Instana (02/10/2026)", ok: true },
-                    { desc: "Coleta de evidências técnicas (13/10/2026)", ok: true },
-                    { desc: "Criação do chamado ID 1103613 (13/10/2026)", ok: true },
-                    { desc: "Análise e correção técnica pela BRB Card", ok: false }
-                ]
-            },
-            {
-                id: 13,
-                tipo: "Tempo de Resposta das APIs",
-                atuacao: "Adequações nos dados de extrato - Contraparte, CodeISPB e D+0",
-                data: "30/10/2026",
-                status: "EM ANDAMENTO",
-                responsavel: "NUCAN",
-                detalhes: "Melhorias no extrato prosseguindo. Reuniões de acompanhamento semanais às sextas-feiras com Samuel Couto.",
-                tarefas: [
-                    { desc: "Em contato com Samuel Couto (NUCAN) (01/10/2026)", ok: true },
-                    { desc: "Teste simples de chamada da consulta (02/10/2026)", ok: true },
-                    { desc: "Aguardando melhorias da NUCAN na consulta de extrato", ok: false },
-                    { desc: "Reuniões semanais de acompanhamento", ok: false }
-                ]
-            },
-            {
-                id: 14,
-                tipo: "Tempo de Resposta das APIs",
-                atuacao: "Revisão e tuning da configuração de threads/pools do OBK para pico",
-                data: "30/10/2026",
-                status: "EM ANDAMENTO",
-                responsavel: "Augusto Freitas / Esdras Kutomi",
-                detalhes: "Detectadas lentidões em horários de pico. Iniciado estudo de quantidade e distribuição de threads para os serviços OBK.",
-                tarefas: [
-                    { desc: "Identificação do gargalo no Instana (16/10/2026)", ok: true },
-                    { desc: "Estudo de configuração otimizada de threads (23/10/2026)", ok: false }
-                ]
-            }
+        // Array com todos os 14 itens originais do seu primeiro arquivo
+        const initialData = [
+            { id: 1, tipo: "Tempo de Resposta das APIs", atuacao: "Reunir todos os endpoints utilizados pelo OF para monitoramento", data: "18/09/2026", status: "FINALIZADA", responsavel: "Marcela Petra", detalhes: "Criada planilha com endpoints, ainda adicionando outros. Aba 'categorias'.", tarefas: [{ desc: "Verificar logs, swaggers e outros para reunir endpoints (15/09/2026)", ok: true }, { desc: "Preencher em planilha (17/09/2026)", ok: true }] },
+            { id: 2, tipo: "Tempo de Resposta das APIs", atuacao: "Criação de dashboards de latência e dispersão (Grafana/Zabbix)", data: "10/10/2026", status: "EM ANDAMENTO", responsavel: "Rafael Macedo Silva (NUMON)", detalhes: "Explorando possibilidades de criação de dashboard no Grafana. Análise de P95 e P99. Aguardando aprovação da liberação do USR_Zabbix no banco MCN1P.AUD.", tarefas: [{ desc: "Separar por endpoint (21/09/2026)", ok: true }, { desc: "Categorizar por tipo (24/09/2026)", ok: true }, { desc: "Criar gráficos (27/09/2026)", ok: true }, { desc: "Liberar USR_Zabbix para acesso ao bd MCN1P.AUD (06/10/2026)", ok: false }, { desc: "Validar usos do dashboard e solicitar ajustes (30/10/2026)", ok: false }] },
+            { id: 3, tipo: "Tempo de Resposta das APIs", atuacao: "Análise de configuração de métricas Actuator/Metrics", data: "22/09/2026", status: "FINALIZADA", responsavel: "Raul Neres", detalhes: "Conseguiu rodar localmente para obter métricas no actuator/prometheus. Configurado para exibir percentis.", tarefas: [{ desc: "Adição de libs micrometer e correções (18/09/2026)", ok: true }, { desc: "Apresentação de percentiles (20/09/2026)", ok: true }, { desc: "Subir versão HMO do obk-dt-resources para uso nos dashboards (22/09/2026)", ok: true }] },
+            { id: 4, tipo: "Tempo de Resposta das APIs", atuacao: "Investigação de planilhas de auditoria e LINA (Lentidões e Erros)", data: "30/09/2026", status: "FINALIZADA", responsavel: "Augusto Freitas, Esdras Kutomi", detalhes: "Divergências encontradas na planilha da Lina. Chamado PCLINA-5787 aberto e alinhado em reunião.", tarefas: [{ desc: "Análise das planilhas (28/09/2026)", ok: true }, { desc: "Abertura do chamado PCLINA-5787 (29/09/2026)", ok: true }, { desc: "Reunião alinhamento com a Lina (29/09/2026)", ok: true }] },
+            { id: 5, tipo: "Tempo de Resposta das APIs", atuacao: "Criação de incidentes na sala DEFCON para investigação contínua", data: "18/09/2026", status: "FINALIZADA", responsavel: "Andressa Gonçalves", detalhes: "Acesso ao banco de dados de PRD providenciado para Augusto.", tarefas: [{ desc: "Acesso concedido ao banco de PRD (16/09/2026)", ok: true }, { desc: "Incidentes abertos na sala DEFCON (18/09/2026)", ok: true }] },
+            { id: 6, tipo: "Taxa de conversão", atuacao: "Análise do impacto da liberação do App to App na Taxa de Conversão", data: "21/10/2026", status: "EM ANDAMENTO", responsavel: "Marcela Petra / Thales", detalhes: "Well Known alterado e App to App liberado em 09/10/2026. Aguardando atualização das métricas.", tarefas: [{ desc: "Versão do app com adoção 100% (01/10/2026)", ok: true }, { desc: "Alteração no well known executada com sucesso (09/10/2026)", ok: true }, { desc: "Aguardando publicação nova taxa de conversão no Quicksight (21/10/2026)", ok: false }] },
+            { id: 7, tipo: "Reporte de Informações", atuacao: "Adequação do envio do campo dropReason nos reports de pagamento LINA", data: "30/09/2026", status: "VALIDANDO", responsavel: "Sala DEFCON", detalhes: "Demanda ESTTSDEF-296 em desenvolvimento/testes.", tarefas: [{ desc: "Fim do desenvolvimento (25/09/2026)", ok: true }, { desc: "Gerar EVT (28/09/2026)", ok: true }, { desc: "Início dos testes de homologação (29/09/2026)", ok: false }] },
+            { id: 8, tipo: "Tempo de Resposta das APIs", atuacao: "Migração de serviços OBK para novo framework com auditoria Kafka async", data: "23/10/2026", status: "EM ANDAMENTO", responsavel: "Esdras Kutomi", detalhes: "Iniciando migração dos serviços de dados abertos para posteriormente migrar transacionais.", tarefas: [{ desc: "Iniciar migração serviços OBK Dados Abertos (12/10/2026)", ok: true }, { desc: "Migrar demais serviços OBK Dados Abertos (23/10/2026)", ok: false }, { desc: "Migrar serviços OBK Dados Transacionais (30/10/2026)", ok: false }] },
+            { id: 9, tipo: "Tempo de Resposta das APIs", atuacao: "Alterar rate limit para async no salvamento da tb_historico_consulta", data: "23/10/2026", status: "EM ANDAMENTO", responsavel: "Augusto Freitas", detalhes: "Versão async do rate limit em fase de análise e testes.", tarefas: [{ desc: "Análise de Lib separada rate limit com async (14/10/2026)", ok: true }, { desc: "Testes do rate limit com async (19/10/2026)", ok: false }, { desc: "Implementar nos serviços OBK Dados Transacionais (23/10/2026)", ok: false }] },
+            { id: 10, tipo: "Tempo de Resposta das APIs", atuacao: "Criar novo microserviço assíncrono para salvamento PCM (obk-si-pcm)", data: "30/10/2026", status: "EM ANDAMENTO", responsavel: "Augusto Freitas / Lucas Samuel", detalhes: "Desacoplamento do gateway para evitar lentidão de salvamento.", tarefas: [{ desc: "Criação de serviço obk-si-pcm (14/10/2026)", ok: true }, { desc: "Desenvolvimento de serviço para salvamento (23/10/2026)", ok: false }, { desc: "Alteração no gateway para chamar o novo serviço (28/10/2026)", ok: false }, { desc: "Implementação em Produção (13/11/2026)", ok: false }] },
+            { id: 11, tipo: "Tempo de Resposta das APIs", atuacao: "Melhoria de tempo de resposta em endpoints OCG (IT02717587 / RS977057)", data: "30/10/2026", status: "EM ANDAMENTO", responsavel: "NUCRE / SPREAD", detalhes: "RS977057 gerada e em análise pela NUCRE.", tarefas: [{ desc: "Identificação do problema no Instana (01/10/2026)", ok: true }, { desc: "Criação da IT02717587 (02/10/2026)", ok: true }, { desc: "Análise técnica pela NUCRE", ok: false }] },
+            { id: 12, tipo: "Tempo de Resposta das APIs", atuacao: "Saneamento de lentidão na API de Cartão com a BRB Card (ID 1103613)", data: "30/10/2026", status: "EM ANDAMENTO", responsavel: "BRB Card", detalhes: "Chamado 1103613 aberto para investigar estouro de tempo de resposta.", tarefas: [{ desc: "Identificação do problema no Instana (02/10/2026)", ok: true }, { desc: "Criação do chamado ID 1103613 (13/10/2026)", ok: true }, { desc: "Análise e correção técnica pela BRB Card", ok: false }] },
+            { id: 13, tipo: "Tempo de Resposta das APIs", atuacao: "Adequações nos dados de extrato - Contraparte, CodeISPB e D+0", data: "30/10/2026", status: "EM ANDAMENTO", responsavel: "NUCAN", detalhes: "Melhorias no extrato prosseguindo. Reuniões de acompanhamento semanais.", tarefas: [{ desc: "Contato com Samuel Couto (NUCAN) (01/10/2026)", ok: true }, { desc: "Teste simples de chamada da consulta (02/10/2026)", ok: true }, { desc: "Aguardando melhorias da NUCAN", ok: false }] },
+            { id: 14, tipo: "Tempo de Resposta das APIs", atuacao: "Revisão e tuning da configuração de threads/pools do OBK para pico", data: "30/10/2026", status: "EM ANDAMENTO", responsavel: "Augusto Freitas / Esdras Kutomi", detalhes: "Detectadas lentidões em horários de pico. Iniciado estudo de distribuição.", tarefas: [{ desc: "Identificação do gargalo no Instana (16/10/2026)", ok: true }, { desc: "Estudo de configuração otimizada de threads (23/10/2026)", ok: false }] }
         ];
 
-        let filteredData = [...rawActionsData];
+        let rawActionsData = JSON.parse(localStorage.getItem('of_brb_data_v7')) || initialData;
+        let config = JSON.parse(localStorage.getItem('of_brb_cfg_v7')) || { title: "Open Finance BRB", gp: "Thales Garcia Cunha" };
 
-        // Theme Toggle Function
-        function toggleTheme() {
-            const html = document.documentElement;
-            const icon = document.getElementById('themeIcon');
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                icon.className = 'fa-solid fa-sun';
-            } else {
-                html.classList.add('dark');
-                icon.className = 'fa-solid fa-moon';
-            }
+        function init() {
+            document.getElementById('headerTitle').innerText = config.title;
+            document.getElementById('headerGp').innerText = config.gp;
+            applyFilters();
         }
 
-        // Accordion Toggle Function
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            const icon = document.getElementById('themeIcon');
+            icon.className = document.documentElement.classList.contains('dark') ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        }
+
         function toggleFrente(frenteId) {
             const el = document.getElementById(frenteId);
             const icon = document.getElementById('icon-' + frenteId);
@@ -904,83 +694,44 @@
             }
         }
 
-        // Status Badge Generator
         function getStatusBadge(status) {
             switch(status) {
                 case 'FINALIZADA':
-                    return `<span class="bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300 text-[11px] font-bold px-2.5 py-1 rounded-full inline-flex items-center gap-1">
-                                <i class="fa-solid fa-check text-[10px]"></i> FINALIZADA
-                            </span>`;
+                    return `<span class="bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300 text-[11px] font-bold px-2.5 py-1 rounded-full inline-flex items-center gap-1"><i class="fa-solid fa-check text-[10px]"></i> FINALIZADA</span>`;
                 case 'VALIDANDO':
-                    return `<span class="bg-purple-100 text-purple-800 dark:bg-purple-900/60 dark:text-purple-300 text-[11px] font-bold px-2.5 py-1 rounded-full inline-flex items-center gap-1">
-                                <i class="fa-solid fa-vial text-[10px]"></i> VALIDANDO
-                            </span>`;
+                    return `<span class="bg-purple-100 text-purple-800 dark:bg-purple-900/60 dark:text-purple-300 text-[11px] font-bold px-2.5 py-1 rounded-full inline-flex items-center gap-1"><i class="fa-solid fa-vial text-[10px]"></i> VALIDANDO</span>`;
                 case 'EM ANDAMENTO':
                 default:
-                    return `<span class="bg-amber-100 text-amber-800 dark:bg-amber-900/60 dark:text-amber-300 text-[11px] font-bold px-2.5 py-1 rounded-full inline-flex items-center gap-1">
-                                <i class="fa-solid fa-spinner animate-spin-slow text-[10px]"></i> EM ANDAMENTO
-                            </span>`;
+                    return `<span class="bg-amber-100 text-amber-800 dark:bg-amber-900/60 dark:text-amber-300 text-[11px] font-bold px-2.5 py-1 rounded-full inline-flex items-center gap-1"><i class="fa-solid fa-spinner animate-spin-slow text-[10px]"></i> EM ANDAMENTO</span>`;
             }
         }
 
-        // Render Table Rows
         function renderTable(data) {
             const tbody = document.getElementById('actionsTableBody');
-            const visibleCount = document.getElementById('visibleCount');
-            visibleCount.textContent = data.length;
+            document.getElementById('visibleCount').textContent = data.length;
 
             if (data.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="6" class="py-8 text-center text-slate-400 dark:text-slate-500">
-                            <i class="fa-solid fa-filter-circle-xmark text-2xl mb-2 block"></i>
-                            Nenhuma ação encontrada para os filtros selecionados.
-                        </td>
-                    </tr>
-                `;
+                tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-400 dark:text-slate-500"><i class="fa-solid fa-filter-circle-xmark text-2xl mb-2 block"></i>Nenhuma ação encontrada.</td></tr>`;
                 return;
             }
 
-            let html = '';
-            data.forEach((item) => {
+            tbody.innerHTML = data.map(item => {
                 const completedTasks = item.tarefas.filter(t => t.ok).length;
                 const totalTasks = item.tarefas.length;
-                const pct = Math.round((completedTasks / totalTasks) * 100) || 0;
+                const pct = totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100);
 
-                html += `
-                    <!-- Primary Action Row -->
+                return `
                     <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/40 transition cursor-pointer border-b border-slate-100 dark:border-slate-800" onclick="toggleSubtasks(${item.id})">
-                        <td class="py-3 px-4">
-                            <span class="font-medium text-slate-700 dark:text-slate-300 block text-xs">
-                                ${item.tipo}
-                            </span>
-                        </td>
-                        <td class="py-3 px-4">
-                            <div class="font-semibold text-slate-800 dark:text-slate-100 text-xs">
-                                ${item.atuacao}
-                            </div>
-                            <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-1">
-                                ${item.detalhes}
-                            </div>
-                        </td>
-                        <td class="py-3 px-4 whitespace-nowrap text-slate-600 dark:text-slate-300">
-                            <i class="fa-solid fa-user-circle text-slate-400 mr-1"></i>${item.responsavel}
-                        </td>
-                        <td class="py-3 px-4 whitespace-nowrap font-mono text-slate-600 dark:text-slate-300">
-                            ${item.data}
-                        </td>
-                        <td class="py-3 px-4 whitespace-nowrap">
-                            ${getStatusBadge(item.status)}
-                        </td>
+                        <td class="py-3 px-4"><span class="font-medium text-slate-700 dark:text-slate-300 block text-xs">${item.tipo}</span></td>
+                        <td class="py-3 px-4"><div class="font-semibold text-slate-800 dark:text-slate-100 text-xs">${item.atuacao}</div><div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-1">${item.detalhes}</div></td>
+                        <td class="py-3 px-4 whitespace-nowrap text-slate-600 dark:text-slate-300"><i class="fa-solid fa-user-circle text-slate-400 mr-1"></i>${item.responsavel}</td>
+                        <td class="py-3 px-4 whitespace-nowrap font-mono text-slate-600 dark:text-slate-300">${item.data}</td>
+                        <td class="py-3 px-4 whitespace-nowrap">${getStatusBadge(item.status)}</td>
                         <td class="py-3 px-4 text-center whitespace-nowrap">
-                            <button onclick="event.stopPropagation(); openDetailsModal(${item.id})" class="text-brb-lightBlue hover:text-brb-blue p-1 rounded hover:bg-blue-50 dark:hover:bg-slate-700">
-                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                            </button>
+                            <button onclick="event.stopPropagation(); editAction(${item.id})" class="text-brb-lightBlue hover:text-brb-blue p-1 rounded hover:bg-blue-50 dark:hover:bg-slate-700" title="Editar Ação"><i class="fa-solid fa-pen"></i></button>
                             <i id="subIcon-${item.id}" class="fa-solid fa-chevron-down text-slate-400 text-xs ml-2 transition-transform"></i>
                         </td>
                     </tr>
-
-                    <!-- Expandable Subtasks Row -->
                     <tr id="subRow-${item.id}" class="hidden bg-slate-50/70 dark:bg-slate-900/60">
                         <td colspan="6" class="p-4 pl-8 border-b border-slate-200 dark:border-slate-700">
                             <div class="max-w-3xl space-y-2">
@@ -991,24 +742,22 @@
                                 <div class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden mb-3">
                                     <div class="bg-brb-lightBlue h-full transition-all duration-300" style="width: ${pct}%"></div>
                                 </div>
-                                <ul class="space-y-1.5">
-                                    ${item.tarefas.map(t => `
-                                        <li class="flex items-start gap-2 text-xs text-slate-700 dark:text-slate-300">
-                                            <i class="${t.ok ? 'fa-solid fa-circle-check text-emerald-500' : 'fa-regular fa-circle text-slate-400'} mt-0.5"></i>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                    ${item.tarefas.map((t, i) => `
+                                        <label class="flex items-start gap-2 text-xs text-slate-700 dark:text-slate-300 cursor-pointer p-1 hover:bg-slate-200/50 dark:hover:bg-slate-800 rounded transition" onclick="event.stopPropagation()">
+                                            <input type="checkbox" ${t.ok ? 'checked' : ''} onchange="toggleTaskCheck(${item.id}, ${i})" class="mt-0.5 rounded text-brb-blue focus:ring-brb-lightBlue">
                                             <span class="${t.ok ? 'line-through opacity-75' : 'font-medium'}">${t.desc}</span>
-                                        </li>
+                                        </label>
                                     `).join('')}
-                                </ul>
+                                </div>
                             </div>
                         </td>
                     </tr>
                 `;
-            });
-
-            tbody.innerHTML = html;
+            }).join('');
+            updateKPIs(data);
         }
 
-        // Toggle Subtask row expansion
         function toggleSubtasks(id) {
             const subRow = document.getElementById(`subRow-${id}`);
             const subIcon = document.getElementById(`subIcon-${id}`);
@@ -1021,27 +770,30 @@
             }
         }
 
-        // Apply Filters
+        function toggleTaskCheck(id, idx) {
+            const item = rawActionsData.find(a => a.id === id);
+            if(item) {
+                item.tarefas[idx].ok = !item.tarefas[idx].ok;
+                saveAndRefresh();
+            }
+        }
+
         function applyFilters() {
             const search = document.getElementById('searchInput').value.toLowerCase();
             const tipo = document.getElementById('filterTipo').value;
             const status = document.getElementById('filterStatus').value;
             const resp = document.getElementById('filterResp').value;
 
-            filteredData = rawActionsData.filter(item => {
-                const matchesSearch = item.atuacao.toLowerCase().includes(search) ||
-                                      item.responsavel.toLowerCase().includes(search) ||
-                                      item.detalhes.toLowerCase().includes(search);
-
+            const filteredData = rawActionsData.filter(item => {
+                const searchString = `${item.atuacao} ${item.responsavel} ${item.detalhes}`.toLowerCase();
+                const matchesSearch = searchString.includes(search);
                 const matchesTipo = tipo === 'ALL' || item.tipo === tipo;
                 const matchesStatus = status === 'ALL' || item.status === status;
                 const matchesResp = resp === 'ALL' || item.responsavel.includes(resp);
-
                 return matchesSearch && matchesTipo && matchesStatus && matchesResp;
             });
 
             renderTable(filteredData);
-            updateKPIs(filteredData);
         }
 
         function resetFilters() {
@@ -1052,112 +804,132 @@
             applyFilters();
         }
 
-        // Update KPI Counters
         function updateKPIs(data) {
             document.getElementById('kpiTotal').textContent = data.length;
-            document.getElementById('kpiFinalizadas').textContent = data.filter(d => d.status === 'FINALIZADA').length;
+            const fin = data.filter(d => d.status === 'FINALIZADA').length;
+            document.getElementById('kpiFinalizadas').textContent = fin;
+            document.getElementById('kpiFinalizadasPct').textContent = data.length ? Math.round((fin / data.length) * 100) + '%' : '0%';
             document.getElementById('kpiEmAndamento').textContent = data.filter(d => d.status === 'EM ANDAMENTO' || d.status === 'VALIDANDO').length;
         }
 
-        // Modal Handling Details
-        function openDetailsModal(id) {
+        function saveAndRefresh() {
+            localStorage.setItem('of_brb_data_v7', JSON.stringify(rawActionsData));
+            localStorage.setItem('of_brb_cfg_v7', JSON.stringify(config));
+            applyFilters();
+        }
+
+        // --- Modals Form Logic ---
+        function openActionModal() {
+            document.getElementById('actionModalTitle').innerText = "Nova Ação";
+            document.getElementById('actId').value = "";
+            document.getElementById('actTipo').value = "Tempo de Resposta das APIs";
+            document.getElementById('actStatus').value = "EM ANDAMENTO";
+            document.getElementById('actAtuacao').value = "";
+            document.getElementById('actDetalhes').value = "";
+            document.getElementById('actResp').value = "";
+            document.getElementById('actData').value = "";
+            document.getElementById('actTarefas').value = "";
+            document.getElementById('btnDelete').classList.add('hidden');
+            document.getElementById('modalAction').classList.remove('hidden');
+        }
+
+        function editAction(id) {
             const item = rawActionsData.find(a => a.id === id);
             if(!item) return;
-
-            document.getElementById('modalTipo').textContent = item.tipo;
-            document.getElementById('modalTitulo').textContent = item.atuacao;
-            document.getElementById('modalResp').textContent = item.responsavel;
-            document.getElementById('modalData').textContent = item.data;
-            document.getElementById('modalStatusBadge').innerHTML = getStatusBadge(item.status);
-            document.getElementById('modalDetalhes').textContent = item.detalhes;
-
-            const tasksUl = document.getElementById('modalTasksList');
-            tasksUl.innerHTML = item.tarefas.map(t => `
-                <li class="flex items-start gap-2 bg-slate-50 dark:bg-slate-900 p-2 rounded-lg border border-slate-100 dark:border-slate-800">
-                    <i class="${t.ok ? 'fa-solid fa-circle-check text-emerald-500' : 'fa-regular fa-circle text-slate-400'} mt-0.5"></i>
-                    <span>${t.desc}</span>
-                </li>
-            `).join('');
-
-            document.getElementById('detailsModal').classList.remove('hidden');
+            document.getElementById('actionModalTitle').innerText = "Editar Ação";
+            document.getElementById('actId').value = item.id;
+            document.getElementById('actTipo').value = item.tipo;
+            document.getElementById('actStatus').value = item.status;
+            document.getElementById('actAtuacao').value = item.atuacao;
+            document.getElementById('actDetalhes').value = item.detalhes;
+            document.getElementById('actResp').value = item.responsavel;
+            document.getElementById('actData').value = item.data;
+            
+            const tfText = item.tarefas.map(t => (t.ok ? "[x] " : "") + t.desc).join('\n');
+            document.getElementById('actTarefas').value = tfText;
+            
+            document.getElementById('btnDelete').classList.remove('hidden');
+            document.getElementById('modalAction').classList.remove('hidden');
         }
 
-        function closeDetailsModal() {
-            document.getElementById('detailsModal').classList.add('hidden');
+        function closeActionModal() { document.getElementById('modalAction').classList.add('hidden'); }
+
+        function saveAction() {
+            const id = document.getElementById('actId').value;
+            const lines = document.getElementById('actTarefas').value.split('\n').filter(l => l.trim() !== '');
+            const tarefas = lines.map(l => {
+                const isOk = l.toLowerCase().startsWith('[x]');
+                return { desc: isOk ? l.substring(3).trim() : l.trim(), ok: isOk };
+            });
+
+            const formData = {
+                tipo: document.getElementById('actTipo').value,
+                status: document.getElementById('actStatus').value,
+                atuacao: document.getElementById('actAtuacao').value,
+                detalhes: document.getElementById('actDetalhes').value,
+                responsavel: document.getElementById('actResp').value,
+                data: document.getElementById('actData').value,
+                tarefas: tarefas
+            };
+
+            if (id) {
+                const index = rawActionsData.findIndex(a => a.id == id);
+                rawActionsData[index] = { ...rawActionsData[index], ...formData };
+            } else {
+                rawActionsData.push({ id: Date.now(), ...formData });
+            }
+
+            saveAndRefresh();
+            closeActionModal();
         }
 
-        // Modal Export Handling
+        function deleteAction() {
+            if(confirm("Tem certeza que deseja excluir esta ação?")) {
+                const id = document.getElementById('actId').value;
+                rawActionsData = rawActionsData.filter(a => a.id != id);
+                saveAndRefresh();
+                closeActionModal();
+            }
+        }
+
+        function openConfigModal() {
+            document.getElementById('cfgTitle').value = config.title;
+            document.getElementById('cfgGp').value = config.gp;
+            document.getElementById('modalConfig').classList.remove('hidden');
+        }
+        function closeConfigModal() { document.getElementById('modalConfig').classList.add('hidden'); }
+        function saveHeaderConfig() {
+            config.title = document.getElementById('cfgTitle').value;
+            config.gp = document.getElementById('cfgGp').value;
+            document.getElementById('headerTitle').innerText = config.title;
+            document.getElementById('headerGp').innerText = config.gp;
+            saveAndRefresh();
+            closeConfigModal();
+        }
+
         function openExportModal() {
-            const reportContent = generateExecutiveTextReport();
-            document.getElementById('reportTextContent').textContent = reportContent;
-            document.getElementById('exportModal').classList.remove('hidden');
-            document.getElementById('copyFeedback').classList.add('hidden');
-        }
-
-        function closeExportModal() {
-            document.getElementById('exportModal').classList.add('hidden');
-        }
-
-        function generateExecutiveTextReport() {
-            const finalizadas = rawActionsData.filter(d => d.status === 'FINALIZADA').length;
-            const emAndamento = rawActionsData.filter(d => d.status === 'EM ANDAMENTO' || d.status === 'VALIDANDO').length;
-
-            return `===============================================================
-RELATÓRIO EXECUTIVO DE DESCONFORMIDADES - OPEN FINANCE BRB
-GP Responsável: Thales Garcia Cunha
-Data do Relatório: Oct/Nov 2026
+            const report = `===============================================================
+RELATÓRIO DE DESCONFORMIDADES - OPEN FINANCE BRB
+GP: ${config.gp} | Total Ações: ${rawActionsData.length}
+Concluídas: ${rawActionsData.filter(d => d.status === 'FINALIZADA').length} | Pendentes: ${rawActionsData.filter(d => d.status !== 'FINALIZADA').length}
 ===============================================================
 
-1. RESUMO DE PROGRESSO:
-   • Total de Ações Monitoradas: ${rawActionsData.length}
-   • Ações Saneadas / Finalizadas: ${finalizadas}
-   • Ações Em Andamento / Validação: ${emAndamento}
-   • Bloqueios / Riscos Ativos: 4
-
-2. DESTAQUES DAS FRENTES DE TRABALHO:
-   • Frente 1 (UX & Conversão): Well Known publicado em 09/10/2026. App-to-App liberado. Aguardando amostragem no Quicksight (21/10).
-   • Frente 2 (Microserviços & Kafka): Desenvolvimentos de Kafka Async, Rate Limit Async e novo Microserviço PCM (obk-si-pcm) em andamento (Prazos 23/10 a 13/11).
-   • Frente 3 (Parceiros/Legados): Pautas abertas com OCG (RS977057), BRB Card (ID 1103613) e NUCAN Extratos.
-   • Frente 4 (Governança): Dashboards P95/P99 Grafana criados (Aguardando acesso USR_Zabbix no BD MCN1P.AUD).
-
-3. RISCOS E PRINCIPAIS IMPEDIMENTOS:
-   [1] Acesso USR_Zabbix pendente no BD MCN1P.AUD (TI / Rafael Macedo).
-   [2] Análise do OCG pela NUCRE/SPREAD para redução de latência.
-   [3] Chamado 1103613 aberto com BRB Card para APIs de cartão.
-   [4] Defasagem de métricas de conversão no Quicksight pelo Regulador.
+RESUMO DAS AÇÕES ABERTAS:
+${rawActionsData.filter(d => d.status !== 'FINALIZADA').map(d => `• [${d.status}] ${d.atuacao} (Resp: ${d.responsavel} | Prazo: ${d.data})`).join('\n')}
 
 ===============================================================`;
+            document.getElementById('reportTextContent').value = report;
+            document.getElementById('exportModal').classList.remove('hidden');
         }
-
+        function closeExportModal() { document.getElementById('exportModal').classList.add('hidden'); }
         function copyReportText() {
-            const text = document.getElementById('reportTextContent').textContent;
-            navigator.clipboard.writeText(text).then(() => {
-                const fb = document.getElementById('copyFeedback');
-                fb.classList.remove('hidden');
-                setTimeout(() => fb.classList.add('hidden'), 3000);
-            }).catch(() => {
-                // Fallback copy
-                const textArea = document.createElement("textarea");
-                textArea.value = text;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                const fb = document.getElementById('copyFeedback');
-                fb.classList.remove('hidden');
-                setTimeout(() => fb.classList.add('hidden'), 3000);
-            });
+            const ta = document.getElementById('reportTextContent');
+            ta.select();
+            document.execCommand('copy');
+            alert('Relatório copiado!');
         }
 
-        function printPDF() {
-            window.print();
-        }
-
-        // Initialize App on DOM Content Loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            renderTable(rawActionsData);
-            updateKPIs(rawActionsData);
-        });
+        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
