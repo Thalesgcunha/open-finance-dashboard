@@ -1,375 +1,1163 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="light">
+<html lang="pt-BR" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Open Finance BRB — Gestão de Desconformidades</title>
+    <title>Open Finance BRB - Dashboard de Desconformidades & Roadmap</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brb: {
+                            blue: '#00529B',
+                            lightBlue: '#0083CA',
+                            darkBlue: '#002B54',
+                            gold: '#D4A017',
+                            accent: '#00A8CC'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts Inter & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --bg-main: #0B0F19;
-            --card-bg: #111827;
-            --border-color: #1F2937;
-            --primary: #2563EB;
-            --accent: #D97706;
+        body { font-family: 'Inter', sans-serif; }
+        /* Custom scrollbars */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.05); }
+        .dark ::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+        ::-webkit-scrollbar-thumb { background: rgba(0, 82, 155, 0.4); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(0, 82, 155, 0.7); }
+        
+        @media print {
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            body { background: white !important; color: black !important; }
         }
-        [data-theme="light"] {
-            --bg-main: #F3F4F6;
-            --card-bg: #FFFFFF;
-            --border-color: #E5E7EB;
-            --primary: #1D4ED8;
-            --accent: #B45309;
-        }
-        body { background-color: var(--bg-main); color: #F3F4F6; font-family: 'Inter', sans-serif; }
-        [data-theme="light"] body { color: #111827; }
-        .bg-card { background-color: var(--card-bg); border-color: var(--border-color); }
-        .completed-task { text-decoration: line-through; opacity: 0.6; }
     </style>
 </head>
-<body class="p-4 md:p-8 min-h-screen">
+<body class="bg-gray-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-200">
 
-    <!-- Header / Navbar -->
-    <header class="max-w-7xl mx-auto mb-8 bg-card p-6 rounded-2xl border shadow-xl flex flex-col md:flex-row justify-between items-center gap-4">
-        <div class="flex items-center gap-4">
-            <img id="header-logo" src="https://raw.githubusercontent.com/feathericons/feather/master/icons/database.svg" alt="Logo" class="w-12 h-12 p-2 bg-blue-600/20 rounded-xl border border-blue-500/30">
-            <div>
-                <div class="flex items-center gap-2">
-                    <h1 id="header-title" class="text-2xl font-bold tracking-tight">Open Finance BRB</h1>
-                    <span id="header-subtitle" class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">Gestão de Desconformidades</span>
+    <!-- Top Navigation Bar -->
+    <header class="bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 sticky top-0 z-30 shadow-sm no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Brand & Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brb-darkBlue via-brb-blue to-brb-lightBlue flex items-center justify-center text-white font-bold text-xl shadow-md">
+                        OF
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <h1 class="font-bold text-lg text-slate-900 dark:text-white leading-tight">Open Finance BRB</h1>
+                            <span class="bg-blue-100 dark:bg-blue-900/60 text-brb-blue dark:text-blue-300 text-xs font-semibold px-2 py-0.5 rounded-full border border-blue-200 dark:border-blue-700/50">
+                                Gestão de Desconformidades
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-5-00 dark:text-slate-400">GP Responsável: <span class="font-medium text-slate-700 dark:text-slate-300">Thales Garcia Cunha</span></p>
+                    </div>
                 </div>
-                <p class="text-sm text-gray-400 mt-1">GP Responsável: <span id="header-gp" class="text-gray-200 font-medium">Thales Garcia Cunha</span></p>
+
+                <!-- Right Toolbar Options -->
+                <div class="flex items-center space-x-2 sm:space-x-3">
+                    <button id="exportModalBtn" onclick="openExportModal()" class="inline-flex items-center px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg text-xs font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600 transition shadow-sm">
+                        <i class="fa-solid fa-file-export mr-1.5 text-brb-lightBlue">
+                        </i> Relatório Executivo
+                    </button>
+                    
+                    <button id="themeToggleBtn" onclick="toggleTheme()" class="p-2 text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 rounded-lg bg-slate-100 dark:bg-slate-700/60 transition">
+                        <i id="themeIcon" class="fa-solid fa-moon"></i>
+                    </button>
+                </div>
             </div>
-        </div>
-        <div class="flex flex-wrap items-center gap-3">
-            <button onclick="openConfigModal()" class="px-3 py-2 bg-gray-800 hover:bg-gray-700 text-xs font-medium rounded-lg border border-gray-700 transition flex items-center gap-2">
-                <i class="fa-solid fa-gear text-blue-400"></i> Personalizar Topo
-            </button>
-            <button onclick="openActionModal()" class="px-3 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium rounded-lg transition flex items-center gap-2">
-                <i class="fa-solid fa-plus"></i> Nova Ação
-            </button>
-            <button onclick="toggleTheme()" class="p-2 bg-gray-800 hover:bg-gray-700 rounded-lg text-gray-300 transition">
-                <i class="fa-solid fa-moon" id="theme-icon"></i>
-            </button>
         </div>
     </header>
 
-    <!-- Cards de Indicadores -->
-    <main class="max-w-7xl mx-auto space-y-8">
-        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="bg-card p-5 rounded-xl border shadow-sm">
-                <p class="text-xs text-gray-400 font-medium uppercase">Total de Ações</p>
-                <h3 id="stat-total" class="text-3xl font-bold mt-2">0</h3>
-                <p class="text-xs text-gray-500 mt-1">Pendências mapeadas</p>
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+        <!-- Top Header & Current Context Banner -->
+        <div class="bg-gradient-to-r from-brb-darkBlue via-brb-blue to-slate-900 text-white rounded-2xl p-6 shadow-xl relative overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 opacity-10 pointer-events-none">
+                <i class="fa-solid fa-shield-halved text-9xl"></i>
             </div>
-            <div class="bg-card p-5 rounded-xl border shadow-sm">
-                <p class="text-xs text-emerald-400 font-medium uppercase">Finalizadas / Concluídas</p>
-                <h3 id="stat-done" class="text-3xl font-bold text-emerald-400 mt-2">0</h3>
-                <p id="stat-done-pct" class="text-xs text-emerald-500/80 mt-1">0% do total</p>
+            <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <div class="inline-flex items-center space-x-2 text-xs font-medium text-blue-200 bg-white/10 px-3 py-1 rounded-full mb-2 backdrop-blur-sm">
+                        <i class="fa-solid fa-calendar-day"></i>
+                        <span>Ciclo de Monitoramento Ativo - Outubro/Novembro 2026</span>
+                    </div>
+                    <h2 class="text-2xl font-extrabold tracking-tight">Roadmap de Saneamento & Adequação das APIs</h2>
+                    <p class="mt-1 text-sm text-blue-100 max-w-2xl">
+                        Acompanhamento centralizado de tratativas técnicas, resolução de timeouts, otimização de latência e alinhamentos com regulador e parceiros (LINA, BRB Card, OCG, NUCAN).
+                    </p>
+                </div>
+                <div class="flex items-center space-x-3 bg-white/10 p-3 rounded-xl backdrop-blur-md border border-white/10 shrink-0">
+                    <div class="text-right">
+                        <div class="text-xs text-blue-200 uppercase tracking-wider font-semibold">Status do Ciclo</div>
+                        <div class="text-sm font-bold text-emerald-400 flex items-center justify-end gap-1">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            Em Saneamento Ativo
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="bg-card p-5 rounded-xl border shadow-sm">
-                <p class="text-xs text-amber-400 font-medium uppercase">Em Andamento / Validação</p>
-                <h3 id="stat-wip" class="text-3xl font-bold text-amber-400 mt-2">0</h3>
-                <p class="text-xs text-amber-500/80 mt-1">Ações em execução</p>
+        </div>
+
+        <!-- 1. KPI Cards Row -->
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-4" id="kpiContainer">
+            <!-- Total -->
+            <div class="bg-white dark:bg-slate-800 rounded-xl p-4 border border-slate-200 dark:border-slate-700/80 shadow-sm relative overflow-hidden">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Total de Ações</p>
+                        <h3 id="kpiTotal" class="text-2xl font-bold text-slate-900 dark:text-white mt-1">13</h3>
+                    </div>
+                    <div class="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-900/40 text-brb-blue dark:text-blue-400 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-list-check"></i>
+                    </div>
+                </div>
+                <div class="mt-3 text-xs text-slate-500 dark:text-slate-400 flex items-center">
+                    <span class="text-slate-600 dark:text-slate-300 font-medium">100%</span>&nbsp;das pendências mapeadas
+                </div>
             </div>
-            <div class="bg-card p-5 rounded-xl border shadow-sm">
-                <p class="text-xs text-rose-400 font-medium uppercase">Bloqueios & Impedimentos</p>
-                <h3 id="stat-risk" class="text-3xl font-bold text-rose-400 mt-2">0</h3>
-                <p class="text-xs text-rose-500/80 mt-1">Requerem atenção do GP</p>
+
+            <!-- Finalizadas -->
+            <div class="bg-white dark:bg-slate-800 rounded-xl p-4 border border-slate-200 dark:border-slate-700/80 shadow-sm relative overflow-hidden">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Finalizadas / Saneadas</p>
+                        <h3 id="kpiFinalizadas" class="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">4</h3>
+                    </div>
+                    <div class="w-10 h-10 rounded-lg bg-emerald-50 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                </div>
+                <div class="mt-3 text-xs text-emerald-600 dark:text-emerald-400 font-medium flex items-center">
+                    <i class="fa-solid fa-arrow-up mr-1"></i> 30.7% concluídas
+                </div>
+            </div>
+
+            <!-- Em Andamento / Validando -->
+            <div class="bg-white dark:bg-slate-800 rounded-xl p-4 border border-slate-200 dark:border-slate-700/80 shadow-sm relative overflow-hidden">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Em Andamento / Validação</p>
+                        <h3 id="kpiEmAndamento" class="text-2xl font-bold text-amber-500 dark:text-amber-400 mt-1">9</h3>
+                    </div>
+                    <div class="w-10 h-10 rounded-lg bg-amber-50 dark:bg-amber-900/40 text-amber-500 dark:text-amber-400 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-spinner animate-spin-slow"></i>
+                    </div>
+                </div>
+                <div class="mt-3 text-xs text-amber-600 dark:text-amber-400 font-medium flex items-center">
+                    <i class="fa-solid fa-clock mr-1"></i> Prazos até 13/11/2026
+                </div>
+            </div>
+
+            <!-- Bloqueios / Riscos Altos -->
+            <div class="bg-white dark:bg-slate-800 rounded-xl p-4 border border-rose-200 dark:border-rose-900/50 shadow-sm relative overflow-hidden">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Bloqueios & Impedimentos</p>
+                        <h3 id="kpiImpedimentos" class="text-2xl font-bold text-rose-600 dark:text-rose-400 mt-1">4</h3>
+                    </div>
+                    <div class="w-10 h-10 rounded-lg bg-rose-50 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                </div>
+                <div class="mt-3 text-xs text-rose-600 dark:text-rose-400 font-medium flex items-center">
+                    <i class="fa-solid fa-shield-alert mr-1"></i> Requerem escalonamento
+                </div>
             </div>
         </section>
 
-        <!-- Tabela / Lista de Ações e Tarefas -->
-        <section class="bg-card rounded-2xl border overflow-hidden shadow-xl">
-            <div class="p-6 border-b border-gray-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <h2 class="text-lg font-bold">Matriz de Acompanhamento & Tarefas</h2>
-                    <p class="text-xs text-gray-400">Clique nas caixas de seleção para concluir tarefas ou edite as informações em tempo real.</p>
+        <!-- 5. Painel de Riscos e Impedimentos (Critical Blockers) -->
+        <section class="bg-rose-50/70 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/50 rounded-2xl p-5 shadow-sm">
+            <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 rounded-lg bg-rose-500 text-white flex items-center justify-center text-sm font-bold shadow-sm">
+                        <i class="fa-solid fa-hand"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-rose-900 dark:text-rose-200">Painel de Riscos & Impedimentos Críticos</h3>
+                        <p class="text-xs text-rose-700 dark:text-rose-300">Ações dependentes de acessos ou terceiros/legados com potencial de desvio do roadmap</p>
+                    </div>
+                </div>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-rose-200 dark:bg-rose-900/80 text-rose-800 dark:text-rose-200">
+                    4 Impedimentos Ativos
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mt-4">
+                <!-- Risk 1 -->
+                <div class="bg-white dark:bg-slate-800 p-3.5 rounded-xl border border-rose-100 dark:border-slate-700 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between text-xs mb-1.5">
+                            <span class="font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Acesso de TI</span>
+                            <span class="bg-rose-100 dark:bg-rose-900/50 text-rose-700 dark:text-rose-300 text-[10px] px-2 py-0.5 rounded font-medium">Aguardando Aprovação</span>
+                        </div>
+                        <h4 class="text-sm font-semibold text-slate-800 dark:text-slate-100">Liberação `USR_Zabbix` no BD MCN1P.AUD</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Impede visualização direta e validação final dos dashboards P95/P99 no Grafana por endpoint.</p>
+                    </div>
+                    <div class="mt-3 pt-2 border-t border-slate-100 dark:border-slate-700 flex justify-between items-center text-xs text-slate-500">
+                        <span><i class="fa-solid fa-user-circle mr-1"></i> Rafael Macedo (NUMON)</span>
+                        <span class="font-mono text-[11px] bg-slate-100 dark:bg-slate-700 px-1.5 py-0.5 rounded">IT02707756</span>
+                    </div>
+                </div>
+
+                <!-- Risk 2 -->
+                <div class="bg-white dark:bg-slate-800 p-3.5 rounded-xl border border-rose-100 dark:border-slate-700 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between text-xs mb-1.5">
+                            <span class="font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Dependência NUCRE</span>
+                            <span class="bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300 text-[10px] px-2 py-0.5 rounded font-medium">Em Análise Técnica</span>
+                        </div>
+                        <h4 class="text-sm font-semibold text-slate-800 dark:text-slate-100">Latência de Resposta OCG</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Gargalo de tempo de resposta em endpoints do OCG. Caso sem solução direta, exigirá rotina de contorno.</p>
+                    </div>
+                    <div class="mt-3 pt-2 border-t border-slate-100 dark:border-slate-700 flex justify-between items-center text-xs text-slate-500">
+                        <span><i class="fa-solid fa-users mr-1"></i> NUCRE / SPREAD</span>
+                        <span class="font-mono text-[11px] bg-slate-100 dark:bg-slate-700 px-1.5 py-0.5 rounded">RS977057</span>
+                    </div>
+                </div>
+
+                <!-- Risk 3 -->
+                <div class="bg-white dark:bg-slate-800 p-3.5 rounded-xl border border-rose-100 dark:border-slate-700 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between text-xs mb-1.5">
+                            <span class="font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Parceiro Externo</span>
+                            <span class="bg-rose-100 dark:bg-rose-900/50 text-rose-700 dark:text-rose-300 text-[10px] px-2 py-0.5 rounded font-medium">Chamado Aberto</span>
+                        </div>
+                        <h4 class="text-sm font-semibold text-slate-800 dark:text-slate-100">Lentidão API de Cartão (BRB Card)</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Erros de timeout e alta latência originados nos serviços da BRB Card impactando SLAs do ecossistema.</p>
+                    </div>
+                    <div class="mt-3 pt-2 border-t border-slate-100 dark:border-slate-700 flex justify-between items-center text-xs text-slate-500">
+                        <span><i class="fa-solid fa-credit-card mr-1"></i> Equipe BRB Card</span>
+                        <span class="font-mono text-[11px] bg-slate-100 dark:bg-slate-700 px-1.5 py-0.5 rounded">ID 1103613</span>
+                    </div>
+                </div>
+
+                <!-- Risk 4 -->
+                <div class="bg-white dark:bg-slate-800 p-3.5 rounded-xl border border-rose-100 dark:border-slate-700 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between text-xs mb-1.5">
+                            <span class="font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Relatórios Regulador</span>
+                            <span class="bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-[10px] px-2 py-0.5 rounded font-medium">Aguardando Métricas</span>
+                        </div>
+                        <h4 class="text-sm font-semibold text-slate-800 dark:text-slate-100">Consolidação Quicksight (App-to-App)</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Relatório de conversão no Quicksight só contém dados até 02/10. Necessário atualizar dados pós 09/10.</p>
+                    </div>
+                    <div class="mt-3 pt-2 border-t border-slate-100 dark:border-slate-700 flex justify-between items-center text-xs text-slate-500">
+                        <span><i class="fa-solid fa-user-check mr-1"></i> Marcela Petra / Thales</span>
+                        <span class="font-mono text-[11px] bg-slate-100 dark:bg-slate-700 px-1.5 py-0.5 rounded">Quicksight OF</span>
+                    </div>
                 </div>
             </div>
+        </section>
+
+        <!-- 2. Interactive Search & Filters Toolbar -->
+        <section class="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-200 dark:border-slate-700 shadow-sm no-print space-y-3">
+            <div class="flex flex-col md:flex-row gap-3 items-center justify-between">
+                <!-- Text Search Input -->
+                <div class="relative w-full md:w-80">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                        <i class="fa-solid fa-magnifying-glass text-sm"></i>
+                    </div>
+                    <input type="text" id="searchInput" oninput="applyFilters()" placeholder="Buscar por tarefa, endpoint ou pessoa..." class="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl text-xs focus:ring-2 focus:ring-brb-lightBlue focus:outline-none transition">
+                </div>
+
+                <!-- Select Filters Group -->
+                <div class="flex flex-wrap gap-2 w-full md:w-auto items-center">
+                    <!-- Filter Tipo -->
+                    <select id="filterTipo" onchange="applyFilters()" class="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs rounded-xl px-3 py-2 text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-brb-lightBlue focus:outline-none">
+                        <option value="ALL">Todos os Tipos de Desconformidade</option>
+                        <option value="Tempo de Resposta das APIs">Tempo de Resposta das APIs</option>
+                        <option value="Disponibilidade">Disponibilidade</option>
+                        <option value="Taxa de conversão">Taxa de Conversão</option>
+                        <option value="Reporte de Informações">Reporte de Informações</option>
+                    </select>
+
+                    <!-- Filter Status -->
+                    <select id="filterStatus" onchange="applyFilters()" class="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs rounded-xl px-3 py-2 text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-brb-lightBlue focus:outline-none">
+                        <option value="ALL">Todos os Status</option>
+                        <option value="EM ANDAMENTO">EM ANDAMENTO</option>
+                        <option value="VALIDANDO">VALIDANDO</option>
+                        <option value="FINALIZADA">FINALIZADA</option>
+                    </select>
+
+                    <!-- Filter Responsável -->
+                    <select id="filterResp" onchange="applyFilters()" class="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs rounded-xl px-3 py-2 text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-brb-lightBlue focus:outline-none">
+                        <option value="ALL">Todos os Responsáveis</option>
+                        <option value="Augusto">Augusto Freitas</option>
+                        <option value="Esdras">Esdras Kutomi</option>
+                        <option value="Marcela">Marcela Petra</option>
+                        <option value="Rafael">Rafael Macedo (NUMON)</option>
+                        <option value="DEFCON">Sala DEFCON</option>
+                        <option value="NUCRE">NUCRE / SPREAD</option>
+                        <option value="BRB Card">BRB Card</option>
+                        <option value="NUCAN">NUCAN</option>
+                    </select>
+
+                    <!-- Clear Filters Button -->
+                    <button onclick="resetFilters()" class="px-3 py-2 text-xs font-medium text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 bg-slate-100 dark:bg-slate-700 rounded-xl transition">
+                        <i class="fa-solid fa-rotate-left mr-1"></i> Limpar
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Visão de Roadmap por Frentes (Accordion / Interactive Timeline) -->
+        <section class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+            <div class="p-5 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between bg-slate-50/50 dark:bg-slate-800/50">
+                <div>
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-route text-brb-lightBlue"></i>
+                        Roadmap Estruturado por Frentes de Atuação
+                    </h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Clique para expandir e ver os marcos e prazos chaves de cada frente</p>
+                </div>
+                <div class="text-xs text-slate-500 dark:text-slate-400 hidden sm:block">
+                    <span class="inline-block w-3 h-3 bg-emerald-500 rounded-full mr-1"></span> Concluído
+                    <span class="inline-block w-3 h-3 bg-amber-500 rounded-full ml-3 mr-1"></span> Em Andamento
+                    <span class="inline-block w-3 h-3 bg-purple-500 rounded-full ml-3 mr-1"></span> Validação
+                </div>
+            </div>
+
+            <div class="divide-y divide-slate-200 dark:divide-slate-700" id="frentesAccordionContainer">
+                <!-- Front 1 -->
+                <div class="frente-item">
+                    <button onclick="toggleFrente('frente1')" class="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 transition text-left">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-9 h-9 rounded-xl bg-blue-100 dark:bg-blue-900/50 text-brb-blue dark:text-blue-300 flex items-center justify-center font-bold text-sm">
+                                F1
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-sm text-slate-800 dark:text-slate-100">Frente 1: UX & Taxa de Conversão (App to App)</h4>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Jornada de Consentimento & Eficiência dos Fluxos</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 dark:bg-amber-900/60 dark:text-amber-200">
+                                1 Ação (21/10/2026)
+                            </span>
+                            <i id="icon-frente1" class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform duration-200"></i>
+                        </div>
+                    </button>
+                    <div id="frente1" class="hidden px-6 py-4 bg-slate-50/50 dark:bg-slate-900/40 border-t border-slate-100 dark:border-slate-800">
+                        <div class="relative border-l-2 border-brb-lightBlue/30 ml-3 space-y-4 py-1">
+                            <div class="relative pl-6">
+                                <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-amber-500 border-2 border-white dark:border-slate-900"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                                    <h5 class="text-xs font-bold text-slate-800 dark:text-slate-200">Avaliação da Efetividade do App to App na Taxa de Conversão</h5>
+                                    <span class="text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950 px-2 py-0.5 rounded border border-amber-200 dark:border-amber-800">Prazo: 21/10/2026</span>
+                                </div>
+                                <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Well Known liberado em 09/10/2026. Acompanhamento pendente do encerramento da janela de amostragem de dados no Quicksight.</p>
+                                <div class="mt-2 text-xs text-slate-500 flex items-center gap-2">
+                                    <span><i class="fa-solid fa-user text-slate-400"></i> Marcela Petra / Thales</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Front 2 -->
+                <div class="frente-item">
+                    <button onclick="toggleFrente('frente2')" class="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 transition text-left">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-9 h-9 rounded-xl bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-300 flex items-center justify-center font-bold text-sm">
+                                F2
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-sm text-slate-800 dark:text-slate-100">Frente 2: Performance Interna & Microserviços</h4>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Otimização de Latência, Kafka Async, Rate Limit Async & Microserviço PCM</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-purple-100 text-purple-800 dark:bg-purple-900/60 dark:text-purple-200">
+                                3 Ações (Até 13/11/2026)
+                            </span>
+                            <i id="icon-frente2" class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform duration-200"></i>
+                        </div>
+                    </button>
+                    <div id="frente2" class="hidden px-6 py-4 bg-slate-50/50 dark:bg-slate-900/40 border-t border-slate-100 dark:border-slate-800">
+                        <div class="relative border-l-2 border-purple-400/30 ml-3 space-y-4 py-1">
+                            <div class="relative pl-6">
+                                <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-amber-500 border-2 border-white dark:border-slate-900"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                                    <h5 class="text-xs font-bold text-slate-800 dark:text-slate-200">Migração Framework com Auditoria Kafka Async (OBK)</h5>
+                                    <span class="text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950 px-2 py-0.5 rounded border border-amber-200 dark:border-amber-800">Prazos: 23/10 (Dados Abertos) | 30/10 (Transacionais)</span>
+                                </div>
+                                <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Eliminação de gargalos na inserção síncrona em filas Kafka nos serviços do OBK.</p>
+                                <div class="mt-2 text-xs text-slate-500">Resp: Esdras Kutomi</div>
+                            </div>
+
+                            <div class="relative pl-6">
+                                <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-amber-500 border-2 border-white dark:border-slate-900"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                                    <h5 class="text-xs font-bold text-slate-800 dark:text-slate-200">Rate Limit Async na Tabela `tb_historico_consulta`</h5>
+                                    <span class="text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950 px-2 py-0.5 rounded border border-amber-200 dark:border-amber-800">Prazo: 23/10/2026</span>
+                                </div>
+                                <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Implementação de biblioteca assíncrona desenvolvida pelo Cristian Bilert em fase de testes por Augusto Freitas.</p>
+                                <div class="mt-2 text-xs text-slate-500">Resp: Augusto Freitas</div>
+                            </div>
+
+                            <div class="relative pl-6">
+                                <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-amber-500 border-2 border-white dark:border-slate-900"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                                    <h5 class="text-xs font-bold text-slate-800 dark:text-slate-200">Novo Microserviço de Salvamento PCM (`obk-si-pcm`)</h5>
+                                    <span class="text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950 px-2 py-0.5 rounded border border-amber-200 dark:border-amber-800">Deploy PRD: 13/11/2026</span>
+                                </div>
+                                <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Descouplamento do Gateway. Microserviço criado por Augusto em acompanhamento com Lucas Samuel.</p>
+                                <div class="mt-2 text-xs text-slate-500">Resp: Augusto Freitas / Lucas Samuel</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Front 3 -->
+                <div class="frente-item">
+                    <button onclick="toggleFrente('frente3')" class="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 transition text-left">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-9 h-9 rounded-xl bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-300 flex items-center justify-center font-bold text-sm">
+                                F3
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-sm text-slate-800 dark:text-slate-100">Frente 3: Integrações, Parceiros & Legados</h4>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Alinhamentos OCG, Cartões (BRB Card) e Extratos (NUCAN)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 dark:bg-amber-900/60 dark:text-amber-200">
+                                3 Ações (30/10/2026)
+                            </span>
+                            <i id="icon-frente3" class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform duration-200"></i>
+                        </div>
+                    </button>
+                    <div id="frente3" class="hidden px-6 py-4 bg-slate-50/50 dark:bg-slate-900/40 border-t border-slate-100 dark:border-slate-800">
+                        <div class="relative border-l-2 border-amber-400/30 ml-3 space-y-4 py-1">
+                            <div class="relative pl-6">
+                                <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-rose-500 border-2 border-white dark:border-slate-900"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                                    <h5 class="text-xs font-bold text-slate-800 dark:text-slate-200">Melhoria de Tempo de Resposta OCG (IT02717587 / RS977057)</h5>
+                                    <span class="text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950 px-2 py-0.5 rounded border border-amber-200 dark:border-amber-800">Prazo: 30/10/2026</span>
+                                </div>
+                                <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Em análise pela NUCRE. Estudo de contorno via rotina de atualização automática se necessário.</p>
+                                <div class="mt-2 text-xs text-slate-500">Resp: NUCRE / SPREAD</div>
+                            </div>
+
+                            <div class="relative pl-6">
+                                <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-rose-500 border-2 border-white dark:border-slate-900"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                                    <h5 class="text-xs font-bold text-slate-800 dark:text-slate-200">Resolução de Saneamento BRB Card (Chamado ID 1103613)</h5>
+                                    <span class="text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950 px-2 py-0.5 rounded border border-amber-200 dark:border-amber-800">Prazo: 30/10/2026</span>
+                                </div>
+                                <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Tratativa técnica de timeouts de API de cartões junto aos responsáveis do BRB Card.</p>
+                                <div class="mt-2 text-xs text-slate-500">Resp: Equipe BRB Card</div>
+                            </div>
+
+                            <div class="relative pl-6">
+                                <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-amber-500 border-2 border-white dark:border-slate-900"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                                    <h5 class="text-xs font-bold text-slate-800 dark:text-slate-200">Adequação de Dados de Extrato (Contraparte, CodeISPB e D+0)</h5>
+                                    <span class="text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950 px-2 py-0.5 rounded border border-amber-200 dark:border-amber-800">Prazo: 30/10/2026</span>
+                                </div>
+                                <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Acompanhamento semanal às sextas-feiras com Samuel Couto (NUCAN) para alinhamento de campos.</p>
+                                <div class="mt-2 text-xs text-slate-500">Resp: NUCAN</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Front 4 -->
+                <div class="frente-item">
+                    <button onclick="toggleFrente('frente4')" class="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 transition text-left">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-9 h-9 rounded-xl bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-300 flex items-center justify-center font-bold text-sm">
+                                F4
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-sm text-slate-800 dark:text-slate-100">Frente 4: Governança, Reporte & Observabilidade</h4>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Dashboards Grafana/Zabbix, Reporte dropReason LINA & Tuning de Threads</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-200">
+                                3 Ações (Até 30/10/2026)
+                            </span>
+                            <i id="icon-frente4" class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform duration-200"></i>
+                        </div>
+                    </button>
+                    <div id="frente4" class="hidden px-6 py-4 bg-slate-50/50 dark:bg-slate-900/40 border-t border-slate-100 dark:border-slate-800">
+                        <div class="relative border-l-2 border-emerald-400/30 ml-3 space-y-4 py-1">
+                            <div class="relative pl-6">
+                                <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-amber-500 border-2 border-white dark:border-slate-900"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                                    <h5 class="text-xs font-bold text-slate-800 dark:text-slate-200">Criação de Dashboards de Latência (P95, P99 e Dispersão)</h5>
+                                    <span class="text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950 px-2 py-0.5 rounded border border-amber-200 dark:border-amber-800">Prazo: 10/10 (Validações até 30/10)</span>
+                                </div>
+                                <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Grafana configurado. Pendente liberação do usuário `USR_Zabbix` no BD MCN1P.AUD.</p>
+                                <div class="mt-2 text-xs text-slate-500">Resp: Rafael Macedo Silva (NUMON)</div>
+                            </div>
+
+                            <div class="relative pl-6">
+                                <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-purple-500 border-2 border-white dark:border-slate-900"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                                    <h5 class="text-xs font-bold text-slate-800 dark:text-slate-200">Envio do Campo `dropReason` no Reporte LINA</h5>
+                                    <span class="text-[11px] font-medium text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950 px-2 py-0.5 rounded border border-purple-200 dark:border-purple-800">Status: Validando</span>
+                                </div>
+                                <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Em fase de testes na demanda ESTTSDEF-296 pela sala DEFCON.</p>
+                                <div class="mt-2 text-xs text-slate-500">Resp: Sala DEFCON</div>
+                            </div>
+
+                            <div class="relative pl-6">
+                                <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-amber-500 border-2 border-white dark:border-slate-900"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                                    <h5 class="text-xs font-bold text-slate-800 dark:text-slate-200">Dimensionamento de Threads e Connection Pools OBK</h5>
+                                    <span class="text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950 px-2 py-0.5 rounded border border-amber-200 dark:border-amber-800">Prazo: 30/10/2026</span>
+                                </div>
+                                <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Revisão de configurações para mitigar lentidões provocadas por picos simultâneos de consumo.</p>
+                                <div class="mt-2 text-xs text-slate-500">Resp: Augusto Freitas / Esdras Kutomi</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Interactive Action & Subtask Matrix Table -->
+        <section class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+            <div class="p-5 border-b border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-table-list text-brb-blue dark:text-brb-lightBlue"></i>
+                        Matriz Detalhada de Ações e Subtarefas Operacionais
+                    </h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Clique na linha da ação para expandir ou recolher as tarefas executadas e pendentes</p>
+                </div>
+                <div class="text-xs text-slate-500 dark:text-slate-400 font-mono">
+                    Exibindo: <span id="visibleCount" class="font-bold text-slate-800 dark:text-slate-200">13</span> ações
+                </div>
+            </div>
+
+            <!-- Table Container -->
             <div class="overflow-x-auto">
-                <table class="w-full text-left text-sm">
-                    <thead class="bg-gray-900/50 text-xs uppercase text-gray-400 border-b border-gray-800">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-slate-50 dark:bg-slate-900/80 text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold border-b border-slate-200 dark:border-slate-700">
                         <tr>
-                            <th class="p-4">Status</th>
-                            <th class="p-4">Tipo / Demanda</th>
-                            <th class="p-4">Responsável</th>
-                            <th class="p-4">Data Prevista</th>
-                            <th class="p-4">Tarefas & Checklists</th>
-                            <th class="p-4 text-right">Ações</th>
+                            <th class="py-3.5 px-4">Tipo / Desconformidade</th>
+                            <th class="py-3.5 px-4">Atuação / Ação Principal</th>
+                            <th class="py-3.5 px-4">Responsável</th>
+                            <th class="py-3.5 px-4">Data Prevista</th>
+                            <th class="py-3.5 px-4">Status</th>
+                            <th class="py-3.5 px-4 text-center">Detalhes</th>
                         </tr>
                     </thead>
-                    <tbody id="actions-table-body" class="divide-y divide-gray-800">
-                        <!-- Gerado via JS -->
+                    <tbody id="actionsTableBody" class="divide-y divide-slate-200 dark:divide-slate-700/60 font-medium">
+                        <!-- Dynamic JavaScript Rows Injected Here -->
                     </tbody>
                 </table>
             </div>
         </section>
+
     </main>
 
-    <!-- Modal Personalizar Topo -->
-    <div id="modal-config" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
-        <div class="bg-card border p-6 rounded-2xl max-w-md w-full space-y-4">
-            <h3 class="text-lg font-bold">Personalizar Topo do Dashboard</h3>
-            <div>
-                <label class="text-xs text-gray-400">URL da Foto / Logo</label>
-                <input type="text" id="cfg-logo" class="w-full mt-1 p-2 bg-gray-900 border rounded-lg text-sm text-gray-200">
+    <!-- Modal: Action Details View -->
+    <div id="detailsModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 dark:border-slate-700 p-6 space-y-4">
+            <div class="flex justify-between items-start border-b border-slate-200 dark:border-slate-700 pb-3">
+                <div>
+                    <span id="modalTipo" class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-100 text-brb-blue dark:bg-blue-900/60 dark:text-blue-300">
+                        Tipo
+                    </span>
+                    <h3 id="modalTitulo" class="text-lg font-bold text-slate-900 dark:text-white mt-2">
+                        Título da Ação
+                    </h3>
+                </div>
+                <button onclick="closeDetailsModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-lg p-1">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
-            <div>
-                <label class="text-xs text-gray-400">Título Principal</label>
-                <input type="text" id="cfg-title" class="w-full mt-1 p-2 bg-gray-900 border rounded-lg text-sm text-gray-200">
+
+            <div class="grid grid-cols-2 gap-4 text-xs">
+                <div>
+                    <span class="text-slate-500 dark:text-slate-400 block font-medium">Responsável</span>
+                    <span id="modalResp" class="font-semibold text-slate-800 dark:text-slate-200 text-sm">--</span>
+                </div>
+                <div>
+                    <span class="text-slate-500 dark:text-slate-400 block font-medium">Data Prevista</span>
+                    <span id="modalData" class="font-semibold text-slate-800 dark:text-slate-200 text-sm">--</span>
+                </div>
             </div>
+
             <div>
-                <label class="text-xs text-gray-400">Subtítulo / Área</label>
-                <input type="text" id="cfg-subtitle" class="w-full mt-1 p-2 bg-gray-900 border rounded-lg text-sm text-gray-200">
+                <span class="text-slate-500 dark:text-slate-400 block text-xs font-medium mb-1">Status Atual</span>
+                <span id="modalStatusBadge" class="inline-block">--</span>
             </div>
+
             <div>
-                <label class="text-xs text-gray-400">GP Responsável</label>
-                <input type="text" id="cfg-gp" class="w-full mt-1 p-2 bg-gray-900 border rounded-lg text-sm text-gray-200">
+                <span class="text-slate-500 dark:text-slate-400 block text-xs font-medium mb-1">Detalhamento & Observações Técnicas</span>
+                <p id="modalDetalhes" class="text-xs text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-700 leading-relaxed">
+                    --
+                </p>
             </div>
-            <div class="flex justify-end gap-2 pt-2">
-                <button onclick="closeConfigModal()" class="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-xs rounded-lg">Cancelar</button>
-                <button onclick="saveHeaderConfig()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-xs rounded-lg text-white">Salvar</button>
+
+            <div>
+                <span class="text-slate-500 dark:text-slate-400 block text-xs font-medium mb-2">Checklist de Tarefas</span>
+                <ul id="modalTasksList" class="space-y-1.5 text-xs text-slate-700 dark:text-slate-300">
+                    <!-- Tasks inserted dynamically -->
+                </ul>
+            </div>
+
+            <div class="pt-3 border-t border-slate-200 dark:border-slate-700 flex justify-end">
+                <button onclick="closeDetailsModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 text-xs font-semibold rounded-xl transition">
+                    Fechar
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Modal Adicionar / Editar Ação -->
-    <div id="modal-action" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
-        <div class="bg-card border p-6 rounded-2xl max-w-lg w-full space-y-4 max-h-[90vh] overflow-y-auto">
-            <h3 id="action-modal-title" class="text-lg font-bold">Nova Ação</h3>
-            <input type="hidden" id="act-id">
-            <div>
-                <label class="text-xs text-gray-400">Tipo de Desconformidade</label>
-                <input type="text" id="act-type" class="w-full mt-1 p-2 bg-gray-900 border rounded-lg text-sm text-gray-200" placeholder="Ex: Tempo de Resposta das APIs">
-            </div>
-            <div>
-                <label class="text-xs text-gray-400">Atuação / Descrição da Ação</label>
-                <textarea id="act-title" class="w-full mt-1 p-2 bg-gray-900 border rounded-lg text-sm text-gray-200" rows="2"></textarea>
-            </div>
-            <div class="grid grid-cols-2 gap-3">
-                <div>
-                    <label class="text-xs text-gray-400">Responsável</label>
-                    <input type="text" id="act-resp" class="w-full mt-1 p-2 bg-gray-900 border rounded-lg text-sm text-gray-200">
+    <!-- Modal: Executive Report Generator -->
+    <div id="exportModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 dark:border-slate-700 p-6 space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-700 pb-3">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-file-contract text-brb-lightBlue text-xl"></i>
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white">Relatório Executivo para Gestão / Teams</h3>
                 </div>
-                <div>
-                    <label class="text-xs text-gray-400">Data Prevista</label>
-                    <input type="text" id="act-date" class="w-full mt-1 p-2 bg-gray-900 border rounded-lg text-sm text-gray-200" placeholder="DD/MM/AAAA">
+                <button onclick="closeExportModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+                Abaixo está o resumo consolidado formatado para cópia rápida (Teams/E-mail) ou impressão oficial de acompanhamento.
+            </p>
+
+            <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-4 font-mono text-xs leading-relaxed text-slate-800 dark:text-slate-200 whitespace-pre-wrap max-h-96 overflow-y-auto" id="reportTextContent">
+<!-- Dynamic Report Generated Here -->
+            </div>
+
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-3 pt-3 border-t border-slate-200 dark:border-slate-700">
+                <span id="copyFeedback" class="text-xs text-emerald-600 font-semibold hidden">
+                    <i class="fa-solid fa-check mr-1"></i> Resumo copiado para a área de transferência!
+                </span>
+                <div class="flex space-x-2 w-full sm:w-auto justify-end">
+                    <button onclick="printPDF()" class="px-3.5 py-2 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 text-xs font-semibold rounded-xl transition">
+                        <i class="fa-solid fa-print mr-1"></i> Imprimir / Gerar PDF
+                    </button>
+                    <button onclick="copyReportText()" class="px-4 py-2 bg-brb-blue hover:bg-brb-darkBlue text-white text-xs font-semibold rounded-xl transition shadow">
+                        <i class="fa-solid fa-copy mr-1"></i> Copiar Texto Formatado
+                    </button>
                 </div>
-            </div>
-            <div>
-                <label class="text-xs text-gray-400">Status</label>
-                <select id="act-status" class="w-full mt-1 p-2 bg-gray-900 border rounded-lg text-sm text-gray-200">
-                    <option value="EM ANDAMENTO">EM ANDAMENTO</option>
-                    <option value="VALIDANDO">VALIDANDO</option>
-                    <option value="FINALIZADA">FINALIZADA</option>
-                </select>
-            </div>
-            <div>
-                <label class="text-xs text-gray-400">Subtarefas (uma por linha)</label>
-                <textarea id="act-subtasks" class="w-full mt-1 p-2 bg-gray-900 border rounded-lg text-sm text-gray-200" rows="3" placeholder="Subtarefa 1&#10;Subtarefa 2"></textarea>
-            </div>
-            <div class="flex justify-end gap-2 pt-2">
-                <button onclick="closeActionModal()" class="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-xs rounded-lg">Cancelar</button>
-                <button onclick="saveAction()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-xs rounded-lg text-white">Salvar Ação</button>
             </div>
         </div>
     </div>
 
+    <!-- Data & Script Engine -->
     <script>
-        // Dados Iniciais Baseados na Planilha
-        const initialData = [
-            { id: 1, type: "Tempo de Resposta das APIs", title: "Reunir todos os endpoints utilizados pelo OF para monitoramento", resp: "Marcela Petra", date: "18/09/2026", status: "FINALIZADA", subtasks: [{ text: "Verificar logs e swaggers", done: true }, { text: "Preencher em planilha", done: true }] },
-            { id: 2, type: "Tempo de Resposta das APIs", title: "Criação de dashboards no Grafana/Zabbix", resp: "Rafael Macedo Silva", date: "10/10/2026", status: "EM ANDAMENTO", subtasks: [{ text: "Separar por endpoint", done: true }, { text: "Liberar USR_Zabbix no MCN1P.AUD", done: false }, { text: "Validar uso do dashboard", done: false }] },
-            { id: 3, type: "Taxa de conversão", title: "Analisar alteração significativa com subida do App to App", resp: "Marcela Petra / Thales", date: "21/10/2026", status: "EM ANDAMENTO", subtasks: [{ text: "Versão do app 100%", done: true }, { text: "Alteração no Well Known", done: true }, { text: "Aguardar relatórios Quicksight", done: false }] },
-            { id: 4, type: "Tempo de Resposta das APIs", title: "Alterar serviços OBK para auditoria Kafka Async", resp: "Esdras Kutomi", date: "23/10/2026", status: "EM ANDAMENTO", subtasks: [{ text: "Migrar serviços de Dados Abertos", done: true }, { text: "Migrar serviços Transacionais", done: false }] }
+        // Data Structure extracted from spreadsheet
+        const rawActionsData = [
+            {
+                id: 1,
+                tipo: "Tempo de Resposta das APIs",
+                atuacao: "Reunir todos os endpoints utilizados pelo OF para monitoramento",
+                data: "18/09/2026",
+                status: "FINALIZADA",
+                responsavel: "Marcela Petra",
+                detalhes: "Criada planilha com endpoints, ainda adicionando outros. Aba 'categorias'.",
+                tarefas: [
+                    { desc: "Verificar logs, swaggers e outros para reunir endpoints (15/09/2026)", ok: true },
+                    { desc: "Preencher em planilha (17/09/2026)", ok: true }
+                ]
+            },
+            {
+                id: 2,
+                tipo: "Tempo de Resposta das APIs",
+                atuacao: "Criação de dashboards de latência e dispersão (Grafana/Zabbix)",
+                data: "10/10/2026",
+                status: "EM ANDAMENTO",
+                responsavel: "Rafael Macedo Silva (NUMON)",
+                detalhes: "Explorando possibilidades de criação de dashboard no Grafana. Análise de P95 e P99. Aguardando aprovação da liberação do USR_Zabbix no banco MCN1P.AUD.",
+                tarefas: [
+                    { desc: "Separar por endpoint (21/09/2026)", ok: true },
+                    { desc: "Categorizar por tipo (24/09/2026)", ok: true },
+                    { desc: "Criar gráficos (27/09/2026)", ok: true },
+                    { desc: "Liberar USR_Zabbix para acesso ao bd MCN1P.AUD (IT02707756 / RS972308) (06/10/2026)", ok: false },
+                    { desc: "Criar linhas de 1s e 1.5s no gráfico de dispersão (02/10/2026)", ok: true },
+                    { desc: "Criar indicadores P95, P99, resposta média/máxima (07/10/2026)", ok: true },
+                    { desc: "Filtrar ids de recursos nas URLs (09/10/2026) - Solução de contorno via busca URL", ok: true },
+                    { desc: "Leitura de métricas prometheus dos serviços (05/10/2026)", ok: true },
+                    { desc: "Validar usos do dashboard e solicitar ajustes (30/10/2026)", ok: false }
+                ]
+            },
+            {
+                id: 3,
+                tipo: "Tempo de Resposta das APIs",
+                atuacao: "Análise de configuração de métricas Actuator/Metrics",
+                data: "22/09/2026",
+                status: "FINALIZADA",
+                responsavel: "Raul Neres",
+                detalhes: "Conseguiu rodar localmente para obter métricas no actuator/prometheus. Configurado para exibir percentis.",
+                tarefas: [
+                    { desc: "Adição de libs micrometer e correções (18/09/2026)", ok: true },
+                    { desc: "Apresentação de percentiles (20/09/2026)", ok: true },
+                    { desc: "Subir versão HMO do obk-dt-resources para uso nos dashboards (22/09/2026)", ok: true }
+                ]
+            },
+            {
+                id: 4,
+                tipo: "Tempo de Resposta das APIs",
+                atuacao: "Investigação de planilhas de auditoria e LINA (Lentidões e Erros)",
+                data: "30/09/2026",
+                status: "FINALIZADA",
+                responsavel: "Augusto Freitas, Esdras Kutomi",
+                detalhes: "Divergências encontradas na planilha da Lina. Chamado PCLINA-5787 aberto e alinhado em reunião. Nova planilha recebida sem divergências.",
+                tarefas: [
+                    { desc: "Análise das planilhas (28/09/2026)", ok: true },
+                    { desc: "Abertura do chamado PCLINA-5787 (29/09/2026)", ok: true },
+                    { desc: "Reunião alinhamento com a Lina (29/09/2026)", ok: true },
+                    { desc: "Retorno da Lina contestando intermitências (08/10/2026)", ok: true }
+                ]
+            },
+            {
+                id: 5,
+                tipo: "Tempo de Resposta das APIs",
+                atuacao: "Criação de incidentes na sala DEFCON para investigação contínua",
+                data: "18/09/2026",
+                status: "FINALIZADA",
+                responsavel: "Andressa Gonçalves",
+                detalhes: "Acesso ao banco de dados de PRD providenciado para Augusto para investigação de erros e lentidões.",
+                tarefas: [
+                    { desc: "Acesso concedido ao banco de PRD (16/09/2026)", ok: true },
+                    { desc: "Incidentes abertos na sala DEFCON e em atendimento (18/09/2026)", ok: true }
+                ]
+            },
+            {
+                id: 6,
+                tipo: "Taxa de conversão",
+                atuacao: "Análise do impacto da liberação do App to App na Taxa de Conversão",
+                data: "21/10/2026",
+                status: "EM ANDAMENTO",
+                responsavel: "Marcela Petra / Thales",
+                detalhes: "Well Known alterado e App to App liberado em 09/10/2026. Aguardando atualização das métricas no Quicksight.",
+                tarefas: [
+                    { desc: "Versão do app com adoção 100% pelos aparelhos (01/10/2026)", ok: true },
+                    { desc: "Alteração no well known (05/10/2026) - Falhou, re-agendado", ok: true },
+                    { desc: "Alteração no well known executada com sucesso (09/10/2026)", ok: true },
+                    { desc: "Aguardando publicação de nova taxa de conversão no Quicksight (21/10/2026)", ok: false }
+                ]
+            },
+            {
+                id: 7,
+                tipo: "Reporte de Informações",
+                atuacao: "Adequação do envio do campo dropReason nos reports de pagamento LINA",
+                data: "30/09/2026",
+                status: "VALIDANDO",
+                responsavel: "Sala DEFCON",
+                detalhes: "Lina faz o reporte, porém é necessária atuação do BRB para fornecer o campo dropReason. Demanda ESTTSDEF-296 em desenvolvimento/testes.",
+                tarefas: [
+                    { desc: "Início do desenvolvimento (15/09/2026)", ok: true },
+                    { desc: "Fim do desenvolvimento (25/09/2026)", ok: true },
+                    { desc: "Gerar EVT (28/09/2026)", ok: true },
+                    { desc: "Início dos testes de homologação (29/09/2026)", ok: false }
+                ]
+            },
+            {
+                id: 8,
+                tipo: "Tempo de Resposta das APIs",
+                atuacao: "Migração de serviços OBK para novo framework com auditoria Kafka async",
+                data: "23/10/2026",
+                status: "EM ANDAMENTO",
+                responsavel: "Esdras Kutomi",
+                detalhes: "Iniciando migração dos serviços de dados abertos para posteriormente migrar os serviços de dados transacionais.",
+                tarefas: [
+                    { desc: "Iniciar migração serviços OBK Dados Abertos (12/10/2026)", ok: true },
+                    { desc: "Migrar demais serviços OBK Dados Abertos (23/10/2026)", ok: false },
+                    { desc: "Migrar serviços OBK Dados Transacionais (30/10/2026)", ok: false }
+                ]
+            },
+            {
+                id: 9,
+                tipo: "Tempo de Resposta das APIs",
+                atuacao: "Alterar rate limit para async no salvamento da tb_historico_consulta",
+                data: "23/10/2026",
+                status: "EM ANDAMENTO",
+                responsavel: "Augusto Freitas",
+                detalhes: "Cristian Bilert criou versão async do rate limit. Augusto em fase de análise e testes.",
+                tarefas: [
+                    { desc: "Análise de Lib separada rate limit com async (14/10/2026)", ok: true },
+                    { desc: "Testes do rate limit com async (19/10/2026)", ok: false },
+                    { desc: "Implementar nos serviços OBK Dados Transacionais (23/10/2026)", ok: false }
+                ]
+            },
+            {
+                id: 10,
+                tipo: "Tempo de Resposta das APIs",
+                atuacao: "Criar novo microserviço assíncrono para salvamento PCM (obk-si-pcm)",
+                data: "30/10/2026",
+                status: "EM ANDAMENTO",
+                responsavel: "Augusto Freitas / Lucas Samuel",
+                detalhes: "Identificada demora de salvamento PCM via Instana no gateway. Novo microserviço em desenvolvimento para desacoplamento.",
+                tarefas: [
+                    { desc: "Criação de serviço obk-si-pcm (14/10/2026)", ok: true },
+                    { desc: "Desenvolvimento de serviço para salvamento (23/10/2026)", ok: false },
+                    { desc: "Alteração no gateway para chamar o novo serviço (28/10/2026)", ok: false },
+                    { desc: "Testes e Homologação (30/10/2026)", ok: false },
+                    { desc: "Implementação em Produção (13/11/2026)", ok: false }
+                ]
+            },
+            {
+                id: 11,
+                tipo: "Tempo de Resposta das APIs",
+                atuacao: "Melhoria de tempo de resposta em endpoints OCG (IT02717587 / RS977057)",
+                data: "30/10/2026",
+                status: "EM ANDAMENTO",
+                responsavel: "NUCRE / SPREAD",
+                detalhes: "RS977057 gerada e em análise pela NUCRE. Avaliar contorno de rotina automática de atualização se não houver ajuste direto.",
+                tarefas: [
+                    { desc: "Identificação do problema no Instana (01/10/2026)", ok: true },
+                    { desc: "Criação da IT02717587 (02/10/2026)", ok: true },
+                    { desc: "Análise técnica pela NUCRE", ok: false },
+                    { desc: "Definição de solução definitiva ou de contorno (30/10/2026)", ok: false }
+                ]
+            },
+            {
+                id: 12,
+                tipo: "Tempo de Resposta das APIs",
+                atuacao: "Saneamento de lentidão na API de Cartão com a BRB Card (ID 1103613)",
+                data: "30/10/2026",
+                status: "EM ANDAMENTO",
+                responsavel: "BRB Card",
+                detalhes: "Chamado 1103613 aberto para investigar estouro de tempo de resposta na API de Cartões.",
+                tarefas: [
+                    { desc: "Identificação do problema no Instana (02/10/2026)", ok: true },
+                    { desc: "Coleta de evidências técnicas (13/10/2026)", ok: true },
+                    { desc: "Criação do chamado ID 1103613 (13/10/2026)", ok: true },
+                    { desc: "Análise e correção técnica pela BRB Card", ok: false }
+                ]
+            },
+            {
+                id: 13,
+                tipo: "Tempo de Resposta das APIs",
+                atuacao: "Adequações nos dados de extrato - Contraparte, CodeISPB e D+0",
+                data: "30/10/2026",
+                status: "EM ANDAMENTO",
+                responsavel: "NUCAN",
+                detalhes: "Melhorias no extrato prosseguindo. Reuniões de acompanhamento semanais às sextas-feiras com Samuel Couto.",
+                tarefas: [
+                    { desc: "Em contato com Samuel Couto (NUCAN) (01/10/2026)", ok: true },
+                    { desc: "Teste simples de chamada da consulta (02/10/2026)", ok: true },
+                    { desc: "Aguardando melhorias da NUCAN na consulta de extrato", ok: false },
+                    { desc: "Reuniões semanais de acompanhamento", ok: false }
+                ]
+            },
+            {
+                id: 14,
+                tipo: "Tempo de Resposta das APIs",
+                atuacao: "Revisão e tuning da configuração de threads/pools do OBK para pico",
+                data: "30/10/2026",
+                status: "EM ANDAMENTO",
+                responsavel: "Augusto Freitas / Esdras Kutomi",
+                detalhes: "Detectadas lentidões em horários de pico. Iniciado estudo de quantidade e distribuição de threads para os serviços OBK.",
+                tarefas: [
+                    { desc: "Identificação do gargalo no Instana (16/10/2026)", ok: true },
+                    { desc: "Estudo de configuração otimizada de threads (23/10/2026)", ok: false }
+                ]
+            }
         ];
 
-        let actions = JSON.parse(localStorage.getItem('brb_actions')) || initialData;
-        let config = JSON.parse(localStorage.getItem('brb_config')) || {
-            logo: "https://raw.githubusercontent.com/feathericons/feather/master/icons/database.svg",
-            title: "Open Finance BRB",
-            subtitle: "Gestão de Desconformidades",
-            gp: "Thales Garcia Cunha"
-        };
+        let filteredData = [...rawActionsData];
 
-        function init() {
-            renderHeader();
-            renderTable();
-            renderStats();
-        }
-
-        function renderHeader() {
-            document.getElementById('header-logo').src = config.logo;
-            document.getElementById('header-title').innerText = config.title;
-            document.getElementById('header-subtitle').innerText = config.subtitle;
-            document.getElementById('header-gp').innerText = config.gp;
-        }
-
-        function renderStats() {
-            document.getElementById('stat-total').innerText = actions.length;
-            const doneCount = actions.filter(a => a.status === 'FINALIZADA').length;
-            document.getElementById('stat-done').innerText = doneCount;
-            document.getElementById('stat-done-pct').innerText = actions.length ? `${Math.round((doneCount / actions.length) * 100)}% concluído` : '0%';
-            document.getElementById('stat-wip').innerText = actions.filter(a => a.status === 'EM ANDAMENTO' || a.status === 'VALIDANDO').length;
-            
-            // Conta bloqueios (subtarefas não feitas em itens em andamento)
-            const risks = actions.filter(a => a.status !== 'FINALIZADA' && a.subtasks.some(s => !s.done)).length;
-            document.getElementById('stat-risk').innerText = risks;
-        }
-
-        function renderTable() {
-            const tbody = document.getElementById('actions-table-body');
-            tbody.innerHTML = actions.map(act => `
-                <tr class="hover:bg-gray-800/30 transition">
-                    <td class="p-4">
-                        <span class="px-2.5 py-1 text-[10px] font-semibold rounded-full ${getStatusStyle(act.status)}">
-                            ${act.status}
-                        </span>
-                    </td>
-                    <td class="p-4">
-                        <p class="text-xs text-blue-400 font-medium">${act.type}</p>
-                        <p class="font-medium text-gray-200 mt-0.5">${act.title}</p>
-                    </td>
-                    <td class="p-4 text-xs text-gray-300">${act.resp}</td>
-                    <td class="p-4 text-xs text-gray-400">${act.date}</td>
-                    <td class="p-4">
-                        <div class="space-y-1">
-                            ${act.subtasks.map((sub, sIdx) => `
-                                <label class="flex items-center gap-2 text-xs text-gray-300 cursor-pointer">
-                                    <input type="checkbox" ${sub.done ? 'checked' : ''} onchange="toggleSubtask(${act.id},${sIdx})" class="rounded border-gray-700 bg-gray-900 text-blue-600 focus:ring-0">
-                                    <span class="${sub.done ? 'completed-task' : ''}">${sub.text}</span>
-                                </label>
-                            `).join('')}
-                        </div>
-                    </td>
-                    <td class="p-4 text-right space-x-2">
-                        <button onclick="editAction(${act.id})" class="text-gray-400 hover:text-blue-400"><i class="fa-solid fa-pen"></i></button>
-                        <button onclick="deleteAction(${act.id})" class="text-gray-400 hover:text-rose-400"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function getStatusStyle(status) {
-            if (status === 'FINALIZADA') return 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
-            if (status === 'VALIDANDO') return 'bg-purple-500/10 text-purple-400 border border-purple-500/20';
-            return 'bg-amber-500/10 text-amber-400 border border-amber-500/20';
-        }
-
-        function toggleSubtask(actId, subIdx) {
-            const act = actions.find(a => a.id === actId);
-            if (act) {
-                act.subtasks[subIdx].done = !act.subtasks[subIdx].done;
-                saveAndRefresh();
-            }
-        }
-
-        function saveAndRefresh() {
-            localStorage.setItem('brb_actions', JSON.stringify(actions));
-            localStorage.setItem('brb_config', JSON.stringify(config));
-            renderTable();
-            renderStats();
-        }
-
-        // Modais de Configuração e Ação
-        function openConfigModal() {
-            document.getElementById('cfg-logo').value = config.logo;
-            document.getElementById('cfg-title').value = config.title;
-            document.getElementById('cfg-subtitle').value = config.subtitle;
-            document.getElementById('cfg-gp').value = config.gp;
-            document.getElementById('modal-config').classList.remove('hidden');
-            document.getElementById('modal-config').classList.add('flex');
-        }
-
-        function closeConfigModal() {
-            document.getElementById('modal-config').classList.add('hidden');
-            document.getElementById('modal-config').classList.remove('flex');
-        }
-
-        function saveHeaderConfig() {
-            config.logo = document.getElementById('cfg-logo').value;
-            config.title = document.getElementById('cfg-title').value;
-            config.subtitle = document.getElementById('cfg-subtitle').value;
-            config.gp = document.getElementById('cfg-gp').value;
-            renderHeader();
-            saveAndRefresh();
-            closeConfigModal();
-        }
-
-        function openActionModal() {
-            document.getElementById('act-id').value = '';
-            document.getElementById('act-type').value = '';
-            document.getElementById('act-title').value = '';
-            document.getElementById('act-resp').value = '';
-            document.getElementById('act-date').value = '';
-            document.getElementById('act-subtasks').value = '';
-            document.getElementById('modal-action').classList.remove('hidden');
-            document.getElementById('modal-action').classList.add('flex');
-        }
-
-        function closeActionModal() {
-            document.getElementById('modal-action').classList.add('hidden');
-            document.getElementById('modal-action').classList.remove('flex');
-        }
-
-        function saveAction() {
-            const id = document.getElementById('act-id').value;
-            const subtasksText = document.getElementById('act-subtasks').value.split('\n').filter(t => t.trim() !== '');
-            const subtasks = subtasksText.map(t => ({ text: t, done: false }));
-
-            if (id) {
-                const act = actions.find(a => a.id == id);
-                act.type = document.getElementById('act-type').value;
-                act.title = document.getElementById('act-title').value;
-                act.resp = document.getElementById('act-resp').value;
-                act.date = document.getElementById('act-date').value;
-                act.status = document.getElementById('act-status').value;
-                if (subtasks.length) act.subtasks = subtasks;
-            } else {
-                actions.push({
-                    id: Date.now(),
-                    type: document.getElementById('act-type').value,
-                    title: document.getElementById('act-title').value,
-                    resp: document.getElementById('act-resp').value,
-                    date: document.getElementById('act-date').value,
-                    status: document.getElementById('act-status').value,
-                    subtasks: subtasks
-                });
-            }
-            saveAndRefresh();
-            closeActionModal();
-        }
-
-        function editAction(id) {
-            const act = actions.find(a => a.id === id);
-            if (act) {
-                document.getElementById('act-id').value = act.id;
-                document.getElementById('act-type').value = act.type;
-                document.getElementById('act-title').value = act.title;
-                document.getElementById('act-resp').value = act.resp;
-                document.getElementById('act-date').value = act.date;
-                document.getElementById('act-status').value = act.status;
-                document.getElementById('act-subtasks').value = act.subtasks.map(s => s.text).join('\n');
-                document.getElementById('modal-action').classList.remove('hidden');
-                document.getElementById('modal-action').classList.add('flex');
-            }
-        }
-
-        function deleteAction(id) {
-            if (confirm("Deseja realmente excluir esta ação?")) {
-                actions = actions.filter(a => a.id !== id);
-                saveAndRefresh();
-            }
-        }
-
+        // Theme Toggle Function
         function toggleTheme() {
-            const current = document.documentElement.getAttribute('data-theme');
-            const target = current === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', target);
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                icon.className = 'fa-solid fa-sun';
+            } else {
+                html.classList.add('dark');
+                icon.className = 'fa-solid fa-moon';
+            }
         }
 
-        init();
+        // Accordion Toggle Function
+        function toggleFrente(frenteId) {
+            const el = document.getElementById(frenteId);
+            const icon = document.getElementById('icon-' + frenteId);
+            if (el.classList.contains('hidden')) {
+                el.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                el.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Status Badge Generator
+        function getStatusBadge(status) {
+            switch(status) {
+                case 'FINALIZADA':
+                    return `<span class="bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300 text-[11px] font-bold px-2.5 py-1 rounded-full inline-flex items-center gap-1">
+                                <i class="fa-solid fa-check text-[10px]"></i> FINALIZADA
+                            </span>`;
+                case 'VALIDANDO':
+                    return `<span class="bg-purple-100 text-purple-800 dark:bg-purple-900/60 dark:text-purple-300 text-[11px] font-bold px-2.5 py-1 rounded-full inline-flex items-center gap-1">
+                                <i class="fa-solid fa-vial text-[10px]"></i> VALIDANDO
+                            </span>`;
+                case 'EM ANDAMENTO':
+                default:
+                    return `<span class="bg-amber-100 text-amber-800 dark:bg-amber-900/60 dark:text-amber-300 text-[11px] font-bold px-2.5 py-1 rounded-full inline-flex items-center gap-1">
+                                <i class="fa-solid fa-spinner animate-spin-slow text-[10px]"></i> EM ANDAMENTO
+                            </span>`;
+            }
+        }
+
+        // Render Table Rows
+        function renderTable(data) {
+            const tbody = document.getElementById('actionsTableBody');
+            const visibleCount = document.getElementById('visibleCount');
+            visibleCount.textContent = data.length;
+
+            if (data.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="py-8 text-center text-slate-400 dark:text-slate-500">
+                            <i class="fa-solid fa-filter-circle-xmark text-2xl mb-2 block"></i>
+                            Nenhuma ação encontrada para os filtros selecionados.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            let html = '';
+            data.forEach((item) => {
+                const completedTasks = item.tarefas.filter(t => t.ok).length;
+                const totalTasks = item.tarefas.length;
+                const pct = Math.round((completedTasks / totalTasks) * 100) || 0;
+
+                html += `
+                    <!-- Primary Action Row -->
+                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/40 transition cursor-pointer border-b border-slate-100 dark:border-slate-800" onclick="toggleSubtasks(${item.id})">
+                        <td class="py-3 px-4">
+                            <span class="font-medium text-slate-700 dark:text-slate-300 block text-xs">
+                                ${item.tipo}
+                            </span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <div class="font-semibold text-slate-800 dark:text-slate-100 text-xs">
+                                ${item.atuacao}
+                            </div>
+                            <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-1">
+                                ${item.detalhes}
+                            </div>
+                        </td>
+                        <td class="py-3 px-4 whitespace-nowrap text-slate-600 dark:text-slate-300">
+                            <i class="fa-solid fa-user-circle text-slate-400 mr-1"></i>${item.responsavel}
+                        </td>
+                        <td class="py-3 px-4 whitespace-nowrap font-mono text-slate-600 dark:text-slate-300">
+                            ${item.data}
+                        </td>
+                        <td class="py-3 px-4 whitespace-nowrap">
+                            ${getStatusBadge(item.status)}
+                        </td>
+                        <td class="py-3 px-4 text-center whitespace-nowrap">
+                            <button onclick="event.stopPropagation(); openDetailsModal(${item.id})" class="text-brb-lightBlue hover:text-brb-blue p-1 rounded hover:bg-blue-50 dark:hover:bg-slate-700">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </button>
+                            <i id="subIcon-${item.id}" class="fa-solid fa-chevron-down text-slate-400 text-xs ml-2 transition-transform"></i>
+                        </td>
+                    </tr>
+
+                    <!-- Expandable Subtasks Row -->
+                    <tr id="subRow-${item.id}" class="hidden bg-slate-50/70 dark:bg-slate-900/60">
+                        <td colspan="6" class="p-4 pl-8 border-b border-slate-200 dark:border-slate-700">
+                            <div class="max-w-3xl space-y-2">
+                                <div class="flex items-center justify-between text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">
+                                    <span>Progresso das Subtarefas Operacionais:</span>
+                                    <span>${completedTasks} de ${totalTasks} concluídas (${pct}%)</span>
+                                </div>
+                                <div class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden mb-3">
+                                    <div class="bg-brb-lightBlue h-full transition-all duration-300" style="width: ${pct}%"></div>
+                                </div>
+                                <ul class="space-y-1.5">
+                                    ${item.tarefas.map(t => `
+                                        <li class="flex items-start gap-2 text-xs text-slate-700 dark:text-slate-300">
+                                            <i class="${t.ok ? 'fa-solid fa-circle-check text-emerald-500' : 'fa-regular fa-circle text-slate-400'} mt-0.5"></i>
+                                            <span class="${t.ok ? 'line-through opacity-75' : 'font-medium'}">${t.desc}</span>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            tbody.innerHTML = html;
+        }
+
+        // Toggle Subtask row expansion
+        function toggleSubtasks(id) {
+            const subRow = document.getElementById(`subRow-${id}`);
+            const subIcon = document.getElementById(`subIcon-${id}`);
+            if (subRow.classList.contains('hidden')) {
+                subRow.classList.remove('hidden');
+                subIcon.style.transform = 'rotate(180deg)';
+            } else {
+                subRow.classList.add('hidden');
+                subIcon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Apply Filters
+        function applyFilters() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const tipo = document.getElementById('filterTipo').value;
+            const status = document.getElementById('filterStatus').value;
+            const resp = document.getElementById('filterResp').value;
+
+            filteredData = rawActionsData.filter(item => {
+                const matchesSearch = item.atuacao.toLowerCase().includes(search) ||
+                                      item.responsavel.toLowerCase().includes(search) ||
+                                      item.detalhes.toLowerCase().includes(search);
+
+                const matchesTipo = tipo === 'ALL' || item.tipo === tipo;
+                const matchesStatus = status === 'ALL' || item.status === status;
+                const matchesResp = resp === 'ALL' || item.responsavel.includes(resp);
+
+                return matchesSearch && matchesTipo && matchesStatus && matchesResp;
+            });
+
+            renderTable(filteredData);
+            updateKPIs(filteredData);
+        }
+
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('filterTipo').value = 'ALL';
+            document.getElementById('filterStatus').value = 'ALL';
+            document.getElementById('filterResp').value = 'ALL';
+            applyFilters();
+        }
+
+        // Update KPI Counters
+        function updateKPIs(data) {
+            document.getElementById('kpiTotal').textContent = data.length;
+            document.getElementById('kpiFinalizadas').textContent = data.filter(d => d.status === 'FINALIZADA').length;
+            document.getElementById('kpiEmAndamento').textContent = data.filter(d => d.status === 'EM ANDAMENTO' || d.status === 'VALIDANDO').length;
+        }
+
+        // Modal Handling Details
+        function openDetailsModal(id) {
+            const item = rawActionsData.find(a => a.id === id);
+            if(!item) return;
+
+            document.getElementById('modalTipo').textContent = item.tipo;
+            document.getElementById('modalTitulo').textContent = item.atuacao;
+            document.getElementById('modalResp').textContent = item.responsavel;
+            document.getElementById('modalData').textContent = item.data;
+            document.getElementById('modalStatusBadge').innerHTML = getStatusBadge(item.status);
+            document.getElementById('modalDetalhes').textContent = item.detalhes;
+
+            const tasksUl = document.getElementById('modalTasksList');
+            tasksUl.innerHTML = item.tarefas.map(t => `
+                <li class="flex items-start gap-2 bg-slate-50 dark:bg-slate-900 p-2 rounded-lg border border-slate-100 dark:border-slate-800">
+                    <i class="${t.ok ? 'fa-solid fa-circle-check text-emerald-500' : 'fa-regular fa-circle text-slate-400'} mt-0.5"></i>
+                    <span>${t.desc}</span>
+                </li>
+            `).join('');
+
+            document.getElementById('detailsModal').classList.remove('hidden');
+        }
+
+        function closeDetailsModal() {
+            document.getElementById('detailsModal').classList.add('hidden');
+        }
+
+        // Modal Export Handling
+        function openExportModal() {
+            const reportContent = generateExecutiveTextReport();
+            document.getElementById('reportTextContent').textContent = reportContent;
+            document.getElementById('exportModal').classList.remove('hidden');
+            document.getElementById('copyFeedback').classList.add('hidden');
+        }
+
+        function closeExportModal() {
+            document.getElementById('exportModal').classList.add('hidden');
+        }
+
+        function generateExecutiveTextReport() {
+            const finalizadas = rawActionsData.filter(d => d.status === 'FINALIZADA').length;
+            const emAndamento = rawActionsData.filter(d => d.status === 'EM ANDAMENTO' || d.status === 'VALIDANDO').length;
+
+            return `===============================================================
+RELATÓRIO EXECUTIVO DE DESCONFORMIDADES - OPEN FINANCE BRB
+GP Responsável: Thales Garcia Cunha
+Data do Relatório: Oct/Nov 2026
+===============================================================
+
+1. RESUMO DE PROGRESSO:
+   • Total de Ações Monitoradas: ${rawActionsData.length}
+   • Ações Saneadas / Finalizadas: ${finalizadas}
+   • Ações Em Andamento / Validação: ${emAndamento}
+   • Bloqueios / Riscos Ativos: 4
+
+2. DESTAQUES DAS FRENTES DE TRABALHO:
+   • Frente 1 (UX & Conversão): Well Known publicado em 09/10/2026. App-to-App liberado. Aguardando amostragem no Quicksight (21/10).
+   • Frente 2 (Microserviços & Kafka): Desenvolvimentos de Kafka Async, Rate Limit Async e novo Microserviço PCM (obk-si-pcm) em andamento (Prazos 23/10 a 13/11).
+   • Frente 3 (Parceiros/Legados): Pautas abertas com OCG (RS977057), BRB Card (ID 1103613) e NUCAN Extratos.
+   • Frente 4 (Governança): Dashboards P95/P99 Grafana criados (Aguardando acesso USR_Zabbix no BD MCN1P.AUD).
+
+3. RISCOS E PRINCIPAIS IMPEDIMENTOS:
+   [1] Acesso USR_Zabbix pendente no BD MCN1P.AUD (TI / Rafael Macedo).
+   [2] Análise do OCG pela NUCRE/SPREAD para redução de latência.
+   [3] Chamado 1103613 aberto com BRB Card para APIs de cartão.
+   [4] Defasagem de métricas de conversão no Quicksight pelo Regulador.
+
+===============================================================`;
+        }
+
+        function copyReportText() {
+            const text = document.getElementById('reportTextContent').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const fb = document.getElementById('copyFeedback');
+                fb.classList.remove('hidden');
+                setTimeout(() => fb.classList.add('hidden'), 3000);
+            }).catch(() => {
+                // Fallback copy
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                const fb = document.getElementById('copyFeedback');
+                fb.classList.remove('hidden');
+                setTimeout(() => fb.classList.add('hidden'), 3000);
+            });
+        }
+
+        function printPDF() {
+            window.print();
+        }
+
+        // Initialize App on DOM Content Loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTable(rawActionsData);
+            updateKPIs(rawActionsData);
+        });
     </script>
 </body>
 </html>
